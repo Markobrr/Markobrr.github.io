@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>PP Orahovica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding-right: 15px;
+        }
+        header {
+            background-color: white;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .logo img {
+            height: 50px;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+        .nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        /* O NAMA hover - gold color */
+        .nav a.text-link:hover {
+            color: #b8860b; /* Gold/yellow color */
+        }
+
+        /* Social media icon styles */
+        .nav a.social-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Facebook hover - blue background, white icon */
+        .nav a.facebook:hover {
+            background-color: #3b5998;
+            color: white;
+        }
+
+        /* Instagram hover - purple background, white icon */
+        .nav a.instagram:hover {
+            background-color: #c13584;
+            color: white;
+        }
+        .main-flex {
+            display: flex;
+        }
+        .left {
+            width: 55%;
+            background-color: #333;
+            color: white;
+            padding: 40px 20px;
+            min-height: 500px;
+            background-image: url(http://test5.fer-plus.com/pporahovica/cover.jpg);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            margin-left: -15px; /* Extend to left margin */
+            padding-left: 35px; /* Compensate for the negative margin */
+        }
+        .left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+        .left h2, .left .list, .left span {
+            position: relative;
+            z-index: 2;
+        }
+        .left h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .list {
+            list-style: none;
+            padding: 0;
+            font-weight: bold;
+        }
+        .list li {
+            margin-bottom: 20px;
+            display: flex;
+        }
+        .list i {
+            margin-right: 10px;
+            font-size: 16px;
+            margin-top: 3px;
+        }
+        .right {
+            width: 45%;
+            background-color: white;
+            padding: 40px;
+        }
+        .right h1 {
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .contact-box {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .contact-box h3 {
+            color: #b8860b;
+            font-size: 18px bold;
+            font-style: italic;
+            margin: 0;
+
+        }
+        .form-row {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        textarea {
+            height: 100px;
+        }
+        .checkbox {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .checkbox input {
+            width: auto;
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        .checkbox p {
+            font-size: 12px;
+            color: #666;
+            margin: 0;
+        }
+        button {
+            background-color: #b8860b;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .web-link {
+            text-align: right;
+            margin-top: 10px;
+        }
+        .web-link a {
+            color: #b8860b;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            .main-flex {
+                flex-direction: column;
+            }
+            .left, .right {
+                width: 100%;
+                margin-left: 0;
+            }
+            .container, .main-container {
+                width: 100%;
+                padding: 0;
+            }
+            .left {
+                min-height: 400px;
+                padding-left: 20px;
+            }
+        }
+        @media (min-width: 1600px) {
+            .container, .main-container {
+                max-width: 1400px;
+            }
+        }
+        @media (max-width: 480px) {
+            .header-flex {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .nav {
+                margin-top: 10px;
+            }
+            .left, .right {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-flex">
+            <div class="logo">
+                <img src="https://pporahovica.hr/wp-content/uploads/2020/05/Logo-gold.png" alt="">
+            </div>
+            <div class="nav">
+                <a href="#" class="text-link">O NAMA</a>
+                <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </header>
+    <div class="main-container main-flex">
+        <div class="left">
+            <h2>Objavljujemo totalnu rasprodaju nekorištenih rezervnih dijelova mehanizacije:</h2>
+            <ul class="list">
+                <li>
+                    <i class="fas fa-circle"></i>
+                    <span>Ležajevi, semerinzi, vijčana roba, kardani, remenje i filteri</span>
+                </li>
+                <li>
+                    <i class="fas fa-circle"></i>
+                    <span>Renomirani proizvođači rezervnih dijelova</span>
+                </li>
+                <li>
+                    <i class="fas fa-circle"></i>
+                    <span>Izvrsno stanje</span>
+                </li>
+                <li>
+                    <i class="fas fa-circle"></i>
+                    <span>Povoljna cijena</span>
+                </li>
+                <li>
+                    <i class="fas fa-circle"></i>
+                    <span>Dijelovi se mogu pogledati svakim radnim danom 8-14 sati na adresi Pustara 1, 33513 Zdenci</span>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <h1>TOTALNA RASPRODAJA NEKORIŠTENIH REZERVNIH DIJELOVA MEHANIZACIJE</h1>
+            <div class="contact-box">
+                <h3>NAZOVITE NAS NA BROJ 091/43 666 09 ILI POŠALJITE UPIT:</h3>
+            </div>
+            <form>
+                <div class="form-row">
+                    <label>VAŠE IME I PREZIME *</label>
+                    <input type="text" placeholder="Unesite svoje ime">
+                </div>
+                <div class="form-row">
+                    <label>BROJ TELEFONA *</label>
+                    <input type="tel" placeholder="Unesite broj telefona">
+                </div>
+                <div class="form-row">
+                    <label>EMAIL ADRESA *</label>
+                    <input type="email" placeholder="Unesite Email">
+                </div>
+                <div class="form-row">
+                    <label>KONTAKTIRAJTE NAS</label>
+                    <textarea placeholder="Unesite poruku"></textarea>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox">
+                    <p>SLAŽEM SE<br>Korištenjem ovog obrasca prihvaćate prikupljanje i obradu osobnih podataka danih u obrascu bez kojih vaš zahtjev u obrascu ne može biti ispunjen.</p>
+                </div>
+                <button type="submit">POŠALJI UPIT</button>
+                <div class="web-link">
+                    <a href="#">Posjetite naš Web</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
