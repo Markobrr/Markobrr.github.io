@@ -36,13 +36,16 @@ header::after {
     border-bottom-left-radius: 50% 80%;
 }
 .header-content {
-    padding-left: 5%;
+    padding-left: 0;
+    margin-left: 5%;
     color: #7a9e6e;
     z-index: 1;
     width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    overflow: visible;
 }
 .header-content h1 {
     font-size: 2.5rem;
@@ -52,10 +55,17 @@ header::after {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-.header-content .header-divider {
-    width: 80%;
-    margin-bottom: 15px;
+.header-content h1 {
+    margin-bottom: 0;
+}
+
+.header-divider {
+    height: 2px;
     background-color: #7a9e6e;
+    width: 400px;
+    margin: 10px 0;
+    position: relative;
+    left: -100px;
 }
 .header-content p {
     font-size: 0.9rem;
@@ -64,7 +74,7 @@ header::after {
     letter-spacing: 0.5px;
     color: black;
     font-weight: 700;
-    margin-top: 0;
+    margin-top: 5px;
 }
 /* Info sekcija */
 .info-section {
@@ -197,7 +207,7 @@ h3 {
 }
 .granulation-title {
     font-size: 0.9rem;
-    font-weight: 700;
+    font-weight: normal;
     color: #333;
     margin-bottom: 8px;
 }
@@ -216,12 +226,9 @@ h3 {
     line-height: 1.5;
 }
 .granulation-list li:before {
-    content: "•";
+    content: "";
     position: absolute;
     left: 0;
-    color: #8DA883;
-    font-size: 1.2rem;
-    line-height: 0.8;
 }
 .product-icons {
     position: absolute;
@@ -432,6 +439,7 @@ footer {
     }
     .header-content {
         width: 50%;
+        padding-left: 0;
     }
     .header-content h1 {
         font-size: 2rem;
@@ -456,11 +464,14 @@ footer {
     .header-content {
         width: 90%;
         margin: 0 auto;
+        padding-left: 0;
         text-align: center;
         align-items: center;
     }
-    .header-content .header-divider {
-        margin: 15px auto;
+    .header-divider {
+        width: 100%;
+        left: 0;
+        margin: 10px auto;
     }
     .product-grid {
         flex-direction: column;
