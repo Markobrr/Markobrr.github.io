@@ -1,13 +1,226 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Portfolio | Marko</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    ovo je naš prvi html dokument.
-    github test
-    <p>welcome</p>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Mateo B<span>.</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Početna</a></li>
+                        <li><a href="#projects">Projekti</a></li>
+                        <li><a href="#skills">Vještine</a></li>
+                        <li><a href="#about">O meni</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Dobrodošli na moj portfolio</h1>
+                <p>Web developer s fokusom na HTML, CSS i JavaScript</p>
+                <a href="#projects" class="btn">Pogledajte moje projekte</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Moji projekti</h2>
+            <div class="divider"></div>
+
+            <div class="project-grid">
+                <!-- Project 1 -->
+                <a href="Oblutak/index.html" class="project-card-link">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="images/oblutak-thumb.jpg" alt="Ukrasni Oblutak">
+                        </div>
+                        <div class="project-info">
+                            <h3>Ukrasni Oblutak</h3>
+                            <p>Web stranica za prodaju ukrasnog oblutka s responzivnim dizajnom.</p>
+                            <div class="project-tags">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>Responsive</span>
+                            </div>
+                            <div class="btn-small">Pogledaj projekt</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 2 -->
+                <a href="Orahovica/pporahovica.html" class="project-card-link">
+                    <div class="project-card">
+                        <div class="project-img">
+                            <img src="images/orahovica-thumb.jpg" alt="PP Orahovica">
+                        </div>
+                        <div class="project-info">
+                            <h3>PP Orahovica</h3>
+                            <p>Web stranica za PP Orahovica s kontakt formom i responzivnim dizajnom.</p>
+                            <div class="project-tags">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>Responsive</span>
+                            </div>
+                            <div class="btn-small">Pogledaj projekt</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project 3 - Web Shop (U izradi) -->
+                <div class="project-card">
+                    <div class="project-img coming-soon">
+                        <div class="coming-soon-overlay">
+                            <span>Uskoro</span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Web Shop</h3>
+                        <p>Online trgovina s košaricom i sustavom plaćanja. Projekt je trenutno u izradi.</p>
+                        <div class="project-tags">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>E-commerce</span>
+                        </div>
+                        <span class="btn-small disabled">U izradi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Moje vještine</h2>
+            <div class="divider"></div>
+
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <ul class="skill-list">
+                        <li><i class="fab fa-html5 skill-icon"></i> HTML5</li>
+                        <li><i class="fab fa-css3-alt skill-icon"></i> CSS3</li>
+                        <li><i class="fab fa-js skill-icon"></i> JavaScript</li>
+                        <li><i class="fab fa-bootstrap skill-icon"></i> Bootstrap</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Alati</h3>
+                    <ul class="skill-list">
+                        <li><i class="fab fa-github skill-icon"></i> GitHub</li>
+                        <li><i class="fas fa-code skill-icon"></i> VS Code</li>
+                        <li><i class="fas fa-terminal skill-icon"></i> Command Line</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h3>Dizajn</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-paint-brush skill-icon"></i> Responsive Design</li>
+                        <li><i class="fas fa-mobile-alt skill-icon"></i> Mobile First</li>
+                        <li><i class="fas fa-universal-access skill-icon"></i> Web Accessibility</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">O meni</h2>
+            <div class="divider"></div>
+
+            <div class="about-content">
+                <div class="about-text">
+                    <h3 class="about-title">Web Developer s fokusom na moderne i responzivne web stranice</h3>
+
+                    <div class="about-description">
+                        <p>Pozdrav! Ja sam web developer s fokusom na izradu modernih i responzivnih web stranica. Moja strast je stvaranje funkcionalnih i vizualno privlačnih web rješenja.</p>
+                        <p>Kroz svoje projekte nastojim kombinirati estetiku s funkcionalnosti, stvarajući web stranice koje su ne samo lijepe, već i korisne i intuitivne za korištenje.</p>
+                        <p>Kontinuirano učim nove tehnologije i pratim trendove u web developmentu kako bih svoje projekte doveo na višu razinu.</p>
+                    </div>
+
+                    <div class="about-interests">
+                        <h3>Područja interesa</h3>
+                        <div class="interests-grid">
+                            <div class="interest-item">
+                                <i class="fas fa-laptop-code"></i>
+                                <span>Web Development</span>
+                            </div>
+                            <div class="interest-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Responsive Design</span>
+                            </div>
+                            <div class="interest-item">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>E-commerce</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Kontaktirajte me</h2>
+            <div class="divider"></div>
+
+            <div class="contact-content-centered">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>email@example.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+385 99 123 4567</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Hrvatska</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Mateo. Sva prava pridržana.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
