@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800px" height="800px" viewBox="0 -4 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <title>mail</title>
+    <desc>Created with Sketch Beta.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-412.000000, -259.000000)" fill="#8DA883">
+            <path d="M442,279 C442,279.203 441.961,279.395 441.905,279.578 L433,270 L442,263 L442,279 L442,279 Z M415.556,279.972 C415.399,279.758 415.304,279.498 415.304,279.214 L415.304,263.214 L424.304,270.214 L415.556,279.972 L415.556,279.972 Z M444,261 L428.795,273.238 L413,261 L444,261 L444,261 Z M431.586,274.681 L427.64,277.585 C427.464,277.723 427.232,277.792 427,277.792 C426.768,277.792 426.536,277.723 426.36,277.585 L422.414,274.681 L413.052,285.108 C413.237,285.294 413.596,285.214 413.596,285.214 L440.404,285.214 C440.404,285.214 440.667,285.317 440.948,285.108 L431.586,274.681 L431.586,274.681 Z" id="mail" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>
