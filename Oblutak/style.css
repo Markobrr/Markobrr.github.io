@@ -479,8 +479,27 @@ footer {
     .product-card {
         width: 100%;
     }
+
+    /* Osiguraj da se slika uvijek prikaže prva na mobilnim uređajima */
+    .product-image-container {
+        order: 1; /* Slika uvijek prva */
+    }
+
+    .product-info {
+        order: 2; /* Tekst uvijek drugi */
+    }
+
     .product-image {
         width: 150px;
         height: 150px;
+    }
+
+    /* Dodaj padding između slika i teksta na mobilnim uređajima */
+    .product-card {
+        padding: 20px 15px;
+    }
+
+    .product-info {
+        padding: 25px 20px;
     }
 }
