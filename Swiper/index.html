@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Swiper Gallery</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #e0e0e1 0%, #b4b4b4 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #334155;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+        }
+        h2 {
+            color: #475569;
+            margin: 40px 0 20px 0;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        .swiper {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            margin: 0 auto 40px auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #1e293b;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .autoplay-info {
+            text-align: center;
+            color: #059669;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Swiper Galerije - 5 Efekata</h1>
+        <h2>Osnovna Galerija</h2>
+        <div class="swiper basic-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/1/800/400" alt="Slika 1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/2/800/400" alt="Slika 2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/3/800/400" alt="Slika 3">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/4/800/400" alt="Slika 4">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/5/800/400" alt="Slika 5">
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <h2>Autoplay sa Fade Efektom</h2>
+        <div class="swiper autoplay-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/11/800/400" alt="Auto 1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/12/800/400" alt="Auto 2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/13/800/400" alt="Auto 3">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/14/800/400" alt="Auto 4">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/15/800/400" alt="Auto 5">
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <h2>Coverflow Efekat</h2>
+        <div class="swiper coverflow-swiper" style="height: 300px;">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/21/600/300" alt="Cover 1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/22/600/300" alt="Cover 2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/23/600/300" alt="Cover 3">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/24/600/300" alt="Cover 4">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/25/600/300" alt="Cover 5">
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <h2>Cube Efekat (3D Kocka)</h2>
+        <div class="swiper cube-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/41/800/400" alt="Cube 1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/42/800/400" alt="Cube 2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/43/800/400" alt="Cube 3">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/44/800/400" alt="Cube 4">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/45/800/400" alt="Cube 5">
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <h2>Cards Efekat (Kartice)</h2>
+        <div class="swiper cards-swiper" style="max-width: 500px;">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/51/500/400" alt="Card 1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/52/500/400" alt="Card 2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/53/500/400" alt="Card 3">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/54/500/400" alt="Card 4">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://picsum.photos/seed/55/500/400" alt="Card 5">
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <footer>
+            <p>Slike iz <a href="https://picsum.photos" target="_blank" style="color: #0ea5e9;">Picsum Photos</a></p>
+        </footer>
+    </div>
+    <script>
+        const basicSwiper = new Swiper('.basic-swiper', {
+            loop: true,
+            navigation: {
+                nextEl: '.basic-swiper .swiper-button-next',
+                prevEl: '.basic-swiper .swiper-button-prev',
+            },
+            pagination: {
+                el: '.basic-swiper .swiper-pagination',
+                clickable: true,
+            },
+        });
+        const autoplaySwiper = new Swiper('.autoplay-swiper', {
+            loop: true,
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: false,
+            },
+            pagination: {
+                el: '.autoplay-swiper .swiper-pagination',
+                clickable: true,
+            },
+        });
+        const coverflowSwiper = new Swiper('.coverflow-swiper', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            loop: true,
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            navigation: {
+                nextEl: '.coverflow-swiper .swiper-button-next',
+                prevEl: '.coverflow-swiper .swiper-button-prev',
+            },
+            pagination: {
+                el: '.coverflow-swiper .swiper-pagination',
+                clickable: true,
+            },
+        });
+        const cubeSwiper = new Swiper('.cube-swiper', {
+            effect: 'cube',
+            grabCursor: true,
+            loop: true,
+            cubeEffect: {
+                shadow: true,
+                slideShadows: true,
+                shadowOffset: 20,
+                shadowScale: 0.94,
+            },
+            navigation: {
+                nextEl: '.cube-swiper .swiper-button-next',
+                prevEl: '.cube-swiper .swiper-button-prev',
+            },
+            pagination: {
+                el: '.cube-swiper .swiper-pagination',
+                clickable: true,
+            },
+        });
+        const cardsSwiper = new Swiper('.cards-swiper', {
+            effect: 'cards',
+            grabCursor: true,
+            loop: true,
+            cardsEffect: {
+                slideShadows: true,
+                perSlideOffset: 8,
+                perSlideRotate: 2,
+            },
+            pagination: {
+                el: '.cards-swiper .swiper-pagination',
+                clickable: true,
+            },
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                autoplaySwiper.autoplay.start();
+                console.log('Autoplay started!');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
