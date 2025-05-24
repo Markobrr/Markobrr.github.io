@@ -1,26 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Basic Meta Tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="A simple Progressive Web App example">
-
-    <!-- Title -->
     <title>Simple PWA</title>
-
-    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#2980b9">
     <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- iOS Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Simple PWA">
-
-    <!-- iOS Icons -->
     <link rel="apple-touch-icon" href="images/icon-192x192.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/icon-72x72.png">
     <link rel="apple-touch-icon" sizes="96x96" href="images/icon-96x96.png">
@@ -30,15 +20,9 @@
     <link rel="apple-touch-icon" sizes="192x192" href="images/icon-192x192.png">
     <link rel="apple-touch-icon" sizes="384x384" href="images/icon-384x384.png">
     <link rel="apple-touch-icon" sizes="512x512" href="images/icon-512x512.png">
-
-    <!-- Manifest File link -->
     <link rel="manifest" href="manifest.json">
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="images/icon-512x512.png">
-
-    <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -48,17 +32,58 @@
                 <h1>Modern PWA</h1>
                 <div class="header-controls">
                     <div class="theme-toggle">
-                        <img src="images/icon-settings.svg" alt="Theme" id="theme-toggle" class="control-icon">
+                        <svg id="theme-toggle" class="control-icon theme-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="sun" cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                            <path class="sun" d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2"/>
+                            <path class="moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" fill="currentColor" style="display: none;"/>
+                        </svg>
                     </div>
-                    <div class="status-indicator">
-                        <span id="online-status" class="status online">●</span>
-                        <span id="status-text">Online</span>
+                    <!-- Quick Navigation -->
+                    <div class="quick-nav">
+                        <button class="nav-btn" onclick="scrollToSection('results')" title="Results">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9 11H7v8h2v-8zm4-4h-2v12h2V7zm4-4h-2v16h2V3z"/>
+                            </svg>
+                        </button>
+                        <button class="nav-btn" onclick="scrollToSection('dashboard')" title="Dashboard">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="3" y="3" width="7" height="7"/>
+                                <rect x="14" y="3" width="7" height="7"/>
+                                <rect x="14" y="14" width="7" height="7"/>
+                                <rect x="3" y="14" width="7" height="7"/>
+                            </svg>
+                        </button>
+                        <button class="nav-btn" onclick="scrollToSection('pwa-features')" title="PWA Features">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </button>
+                        <button class="nav-btn" onclick="scrollToSection('quick-actions')" title="Quick Actions">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                            </svg>
+                        </button>
+                        <button class="nav-btn" onclick="scrollToSection('time-widget')" title="Time & Date">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12,6 12,12 16,14"/>
+                            </svg>
+                        </button>
+                        <button class="nav-btn" onclick="scrollToSection('network-info')" title="Network Info">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>
+                            </svg>
+                        </button>
+                        <button class="nav-btn" onclick="scrollToSection('tools-utilities')" title="Tools & Utilities">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
             <p>Progressive Web App with modern features</p>
         </header>
-
         <main>
             <!-- Dashboard Section -->
             <section id="dashboard">
@@ -94,7 +119,6 @@
                     </div>
                 </div>
             </section>
-
             <!-- PWA Features Section -->
             <section id="pwa-features">
                 <h2>🛠️ PWA Features</h2>
@@ -105,52 +129,244 @@
                         <p>Enable notifications for updates</p>
                         <button class="feature-btn" id="notification-btn">Enable</button>
                     </div>
-
                     <div class="feature-card" onclick="openCamera()">
                         <img src="images/icon-user.svg" alt="Camera" class="feature-icon">
                         <h3>Camera Access</h3>
                         <p>Take photos with your camera</p>
                         <button class="feature-btn">Open Camera</button>
                     </div>
-
                     <div class="feature-card" onclick="generateQR()">
                         <img src="images/icon-share.svg" alt="QR Code" class="feature-icon">
                         <h3>QR Generator</h3>
                         <p>Generate QR codes instantly</p>
                         <button class="feature-btn">Generate QR</button>
                     </div>
-
                     <div class="feature-card" onclick="getWeather()">
                         <img src="images/icon-home.svg" alt="Weather" class="feature-icon">
                         <h3>Weather</h3>
                         <p>Check current weather</p>
                         <button class="feature-btn">Get Weather</button>
                     </div>
+                    <div class="feature-card" onclick="getLocation()">
+                        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
+                        </svg>
+                        <h3>Location</h3>
+                        <p>Get your current location</p>
+                        <button class="feature-btn">Get Location</button>
+                    </div>
+                    <div class="feature-card" onclick="deviceInfo()">
+                        <svg class="feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" fill="currentColor"/>
+                            <rect x="2" y="3" width="20" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                        <h3>Device Info</h3>
+                        <p>View device information</p>
+                        <button class="feature-btn">Show Info</button>
+                    </div>
                 </div>
             </section>
-
+            <!-- Quick Actions Section -->
+            <section id="quick-actions">
+                <h2>⚡ Quick Actions</h2>
+                <div class="quick-actions-grid">
+                    <div class="quick-action-card" onclick="shareApp()">
+                        <svg class="quick-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z" fill="currentColor"/>
+                        </svg>
+                        <h4>Share App</h4>
+                        <p>Share with friends</p>
+                    </div>
+                    <div class="quick-action-card" onclick="fullscreenToggle()">
+                        <svg class="quick-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" fill="currentColor"/>
+                        </svg>
+                        <h4>Fullscreen</h4>
+                        <p>Toggle fullscreen</p>
+                    </div>
+                    <div class="quick-action-card" onclick="copyToClipboard()">
+                        <svg class="quick-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" fill="currentColor"/>
+                        </svg>
+                        <h4>Copy URL</h4>
+                        <p>Copy app link</p>
+                    </div>
+                    <div class="quick-action-card" onclick="refreshData()">
+                        <svg class="quick-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" fill="currentColor"/>
+                        </svg>
+                        <h4>Refresh</h4>
+                        <p>Update data</p>
+                    </div>
+                </div>
+            </section>
+            <!-- Time & Date Widget -->
+            <section id="time-widget">
+                <h2>🕐 Time & Date</h2>
+                <div class="time-widget-container">
+                    <div class="time-display">
+                        <div class="current-time" id="current-time">12:00:00</div>
+                        <div class="current-date" id="current-date">Monday, January 1, 2025</div>
+                    </div>
+                    <div class="time-zones">
+                        <div class="timezone-item">
+                            <span class="timezone-label">Zagreb</span>
+                            <span class="timezone-time" id="zagreb-time">12:00</span>
+                        </div>
+                        <div class="timezone-item">
+                            <span class="timezone-label">London</span>
+                            <span class="timezone-time" id="london-time">11:00</span>
+                        </div>
+                        <div class="timezone-item">
+                            <span class="timezone-label">New York</span>
+                            <span class="timezone-time" id="newyork-time">06:00</span>
+                        </div>
+                        <div class="timezone-item">
+                            <span class="timezone-label">Tokyo</span>
+                            <span class="timezone-time" id="tokyo-time">20:00</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <!-- Results Section -->
             <section id="results">
-                <div id="camera-result" class="result-container" style="display: none;">
-                    <h3>📸 Camera</h3>
-                    <video id="video" autoplay style="display: none;"></video>
-                    <canvas id="canvas" style="display: none;"></canvas>
-                    <div id="photo-result"></div>
+                <h2>📊 Results</h2>
+                <p>Rezultati iz različitih PWA funkcionalnosti će se prikazati ovdje:</p>
+                <div id="camera-result" class="result-container slider-container collapsed" style="display: none;">
+                    <div class="result-header" onclick="toggleSlider('camera-result')">
+                        <h3>📸 Camera</h3>
+                        <button class="toggle-btn">+</button>
+                    </div>
+                    <div class="result-content">
+                        <video id="video" autoplay style="display: none;"></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                        <div id="photo-result"></div>
+                    </div>
                 </div>
-
-                <div id="qr-result" class="result-container" style="display: none;">
-                    <h3>📱 QR Code Generator</h3>
-                    <input type="text" id="qr-input" placeholder="Enter text for QR code">
-                    <div id="qr-display"></div>
+                <div id="qr-result" class="result-container slider-container collapsed" style="display: none;">
+                    <div class="result-header" onclick="toggleSlider('qr-result')">
+                        <h3>📱 QR Code Generator</h3>
+                        <button class="toggle-btn">+</button>
+                    </div>
+                    <div class="result-content">
+                        <input type="text" id="qr-input" placeholder="Enter text for QR code">
+                        <div id="qr-display"></div>
+                    </div>
                 </div>
-
-                <div id="weather-result" class="result-container" style="display: none;">
-                    <h3>🌤️ Weather</h3>
-                    <div id="weather-display">Loading weather...</div>
+                <div id="weather-result" class="result-container slider-container collapsed" style="display: none;">
+                    <div class="result-header" onclick="toggleSlider('weather-result')">
+                        <h3>🌤️ Weather</h3>
+                        <button class="toggle-btn">+</button>
+                    </div>
+                    <div class="result-content">
+                        <div id="weather-display">Loading weather...</div>
+                    </div>
+                </div>
+                <div id="location-result" class="result-container slider-container collapsed" style="display: none;">
+                    <div class="result-header" onclick="toggleSlider('location-result')">
+                        <h3>📍 Location</h3>
+                        <button class="toggle-btn">+</button>
+                    </div>
+                    <div class="result-content">
+                        <div id="location-display">Getting location...</div>
+                    </div>
+                </div>
+                <div id="device-result" class="result-container slider-container collapsed" style="display: none;">
+                    <div class="result-header" onclick="toggleSlider('device-result')">
+                        <h3>📱 Device Information</h3>
+                        <button class="toggle-btn">+</button>
+                    </div>
+                    <div class="result-content">
+                        <div id="device-display">Loading device info...</div>
+                    </div>
+                </div>
+                <!-- Time Display -->
+                <div id="time-results" class="result-container slider-container">
+                    <div class="result-header" onclick="toggleSlider('time-results')">
+                        <h3>🕐 Current Time</h3>
+                        <button class="toggle-btn">−</button>
+                    </div>
+                    <div class="result-content">
+                        <div class="time-display">
+                            <div class="current-time" id="results-current-time">12:00:00</div>
+                            <div class="current-date" id="results-current-date">Monday, January 1, 2025</div>
+                        </div>
+                    </div>
                 </div>
             </section>
-
-            <!-- Install Section -->
+            <!-- Network Info Section -->
+            <section id="network-info">
+                <h2>📡 Network Information</h2>
+                <div class="network-grid">
+                    <div class="network-card" onclick="testConnectionSpeed()">
+                        <svg class="network-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.07 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" fill="currentColor"/>
+                        </svg>
+                        <h4>Speed Test</h4>
+                        <p>Test connection speed</p>
+                        <div id="speed-result" class="speed-display">Click to test</div>
+                    </div>
+                    <div class="network-card" onclick="pingTest()">
+                        <svg class="network-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                            <path d="M12 1v6m0 10v6m11-7h-6m-10 0H1m15.5-6.5l-4.24 4.24M7.76 7.76L3.52 3.52m12.96 12.96l4.24 4.24M7.76 16.24l-4.24 4.24" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <h4>Ping Test</h4>
+                        <p>Check latency</p>
+                        <div id="ping-result" class="ping-display">Click to ping</div>
+                    </div>
+                    <div class="network-card" onclick="showDetailedNetworkInfo()">
+                        <svg class="network-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <line x1="9" y1="9" x2="15" y2="9" stroke="currentColor" stroke-width="2"/>
+                            <line x1="9" y1="13" x2="15" y2="13" stroke="currentColor" stroke-width="2"/>
+                            <line x1="9" y1="17" x2="13" y2="17" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <h4>Network Details</h4>
+                        <p>View connection info</p>
+                        <div id="network-details" class="network-display">Click for details</div>
+                    </div>
+                </div>
+            </section>
+            <section id="tools-utilities">
+                <h2>🔧 Tools & Utilities</h2>
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="openColorPicker()">
+                        <svg class="tool-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
+                        </svg>
+                        <h4>Color Picker</h4>
+                        <p>Pick and convert colors</p>
+                    </div>
+                    <div class="tool-card" onclick="openBase64Tool()">
+                        <svg class="tool-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="2"/>
+                            <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2"/>
+                            <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <h4>Base64 Tool</h4>
+                        <p>Encode/decode Base64</p>
+                    </div>
+                    <div class="tool-card" onclick="openPasswordGenerator()">
+                        <svg class="tool-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                            <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <h4>Password Gen</h4>
+                        <p>Generate secure passwords</p>
+                    </div>
+                    <div class="tool-card" onclick="openUrlShortener()">
+                        <svg class="tool-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="2"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <h4>URL Shortener</h4>
+                        <p>Shorten long URLs</p>
+                    </div>
+                </div>
+            </section>
             <section id="install-section">
                 <button class="btn install-btn" id="manual-install">
                     <img src="images/icon-home.svg" alt="Install" class="btn-icon">
@@ -162,7 +378,6 @@
             <p>&copy; 2025 Simple PWA. All rights reserved.</p>
         </footer>
     </div>
-
     <!-- Install prompt -->
     <div id="install-prompt">
         <p>Install this app on your device for quick access.</p>
@@ -171,11 +386,142 @@
             <button id="close-prompt" class="btn">Not Now</button>
         </div>
     </div>
-
-    <!-- Scripts -->
+    <div id="color-picker-modal" class="tool-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">🎨 Color Picker</h3>
+                <button class="close-btn" onclick="closeModal('color-picker-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="color-input-container">
+                    <input type="text" id="color-name-input" class="color-input" placeholder="Unesite naziv boje (npr. green, blue, red...)">
+                    <div id="color-suggestions" class="color-suggestions"></div>
+                </div>
+                <div class="color-input-container" style="margin-top: 20px;">
+                    <label for="visual-color-picker" style="display: block; margin-bottom: 10px; font-weight: 500;">Odaberite boju vizualno:</label>
+                    <input type="color" id="visual-color-picker" class="visual-color-picker" value="#667eea">
+                </div>
+                <div class="color-input-container" style="margin-top: 20px;">
+                    <input type="text" id="hex-color-input" class="color-input" placeholder="Enter a HEX color (e.g., #667eea)">
+                </div>
+                <div class="color-palette-container" style="margin-top: 20px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 500;">Odaberite iz palete:</label>
+                    <div class="color-palette" id="color-palette">
+                    </div>
+                </div>
+                <div id="color-result" class="color-result" style="display: none;">
+                    <div class="hex-value" id="hex-value"></div>
+                    <div class="color-preview" id="color-preview-large" style="width: 100px; height: 100px; margin: 0 auto 15px;"></div>
+                    <button class="apply-background-btn" onclick="applyBackgroundColor()">Primijeni kao pozadinu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Password Generator Modal -->
+    <div id="password-generator-modal" class="tool-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">🔒 Password Generator</h3>
+                <button class="close-btn" onclick="closeModal('password-generator-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="password-options">
+                    <div class="option-group">
+                        <label>Duljina lozinke:</label>
+                        <div class="length-control">
+                            <input type="range" id="password-length" class="length-slider" min="4" max="50" value="12">
+                            <span class="length-value" id="length-value">12</span>
+                        </div>
+                    </div>
+                    <div class="option-group">
+                        <input type="checkbox" id="include-uppercase" checked>
+                        <label for="include-uppercase">Velika slova (A-Z)</label>
+                    </div>
+                    <div class="option-group">
+                        <input type="checkbox" id="include-lowercase" checked>
+                        <label for="include-lowercase">Mala slova (a-z)</label>
+                    </div>
+                    <div class="option-group">
+                        <input type="checkbox" id="include-numbers" checked>
+                        <label for="include-numbers">Brojevi (0-9)</label>
+                    </div>
+                    <div class="option-group">
+                        <input type="checkbox" id="include-symbols">
+                        <label for="include-symbols">Simboli (!@#$%^&*)</label>
+                    </div>
+                    <div class="option-group">
+                        <input type="checkbox" id="symbols-letters-combo">
+                        <label for="symbols-letters-combo">Kombinacija simbola i slova-brojeva</label>
+                    </div>
+                </div>
+                <div class="password-result" id="password-result">Kliknite "Generiraj" za novu lozinku</div>
+                <div style="text-align: center;">
+                    <button class="generate-btn" onclick="generatePassword()">Generiraj lozinku</button>
+                    <button class="copy-password-btn" onclick="copyPassword()">Kopiraj</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Base64 Tool Modal -->
+    <div id="base64-tool-modal" class="tool-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">📄 Base64 Tool</h3>
+                <button class="close-btn" onclick="closeModal('base64-tool-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="base64-container">
+                    <div class="base64-section">
+                        <h4>Tekst za kodiranje/dekodiranje:</h4>
+                        <textarea id="base64-input" class="base64-textarea" placeholder="Unesite tekst ovdje..."></textarea>
+                        <div class="base64-buttons">
+                            <button class="base64-btn" onclick="encodeBase64()">Kodiraj u Base64</button>
+                            <button class="base64-btn" onclick="decodeBase64()">Dekodiraj iz Base64</button>
+                            <button class="base64-btn" onclick="clearBase64()">Očisti</button>
+                        </div>
+                    </div>
+                    <div class="base64-section">
+                        <h4>Rezultat:</h4>
+                        <textarea id="base64-output" class="base64-textarea" readonly placeholder="Rezultat će se prikazati ovdje..."></textarea>
+                        <div class="base64-buttons">
+                            <button class="base64-btn" onclick="copyBase64Result()">Kopiraj rezultat</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- URL Shortener Modal -->
+    <div id="url-shortener-modal" class="tool-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">🔗 URL Shortener</h3>
+                <button class="close-btn" onclick="closeModal('url-shortener-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="base64-container">
+                    <div class="base64-section">
+                        <h4>Unesite URL za skraćivanje:</h4>
+                        <textarea id="url-input" class="base64-textarea" placeholder="https://example.com/very-long-url..." style="min-height: 60px;"></textarea>
+                        <div class="base64-buttons">
+                            <button class="base64-btn" onclick="shortenUrl()">Skrati URL</button>
+                            <button class="base64-btn" onclick="clearUrl()">Očisti</button>
+                        </div>
+                    </div>
+                    <div class="base64-section">
+                        <h4>Skraćeni URL:</h4>
+                        <textarea id="url-output" class="base64-textarea" readonly placeholder="Skraćeni URL će se prikazati ovdje..." style="min-height: 60px;"></textarea>
+                        <div class="base64-buttons">
+                            <button class="base64-btn" onclick="copyUrlResult()">Kopiraj URL</button>
+                            <button class="base64-btn" onclick="openShortenedUrl()">Otvori URL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="js/app.js"></script>
     <script>
-        // Register the Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('serviceworker.js')
@@ -187,52 +533,368 @@
                     });
             });
         }
-
-        // Theme toggle functionality
         let isDarkMode = localStorage.getItem('darkMode') === 'true';
-
         function toggleTheme() {
             isDarkMode = !isDarkMode;
             document.body.classList.toggle('dark-mode', isDarkMode);
             localStorage.setItem('darkMode', isDarkMode);
+            updateThemeIcon();
+            updateThemeSelect();
         }
+        function updateThemeIcon() {
+            const sunElements = document.querySelectorAll('.theme-icon .sun');
+            const moonElements = document.querySelectorAll('.theme-icon .moon');
 
-        // Apply saved theme on load
+            if (isDarkMode) {
+                sunElements.forEach(el => el.style.display = 'none');
+                moonElements.forEach(el => el.style.display = 'block');
+            } else {
+                sunElements.forEach(el => el.style.display = 'block');
+                moonElements.forEach(el => el.style.display = 'none');
+            }
+        }
         if (isDarkMode) {
             document.body.classList.add('dark-mode');
         }
-
+        updateThemeIcon();
         document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+        // Sticky Header Functionality
+        let lastScrollTop = 0;
+        const header = document.querySelector('header');
+        const headerHeight = header.offsetHeight;
+        function handleScroll() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-        // Online/Offline status
-        function updateOnlineStatus() {
-            const statusElement = document.getElementById('online-status');
-            const statusText = document.getElementById('status-text');
-
-            if (navigator.onLine) {
-                statusElement.className = 'status online';
-                statusText.textContent = 'Online';
+            if (scrollTop > headerHeight + 50) {
+                header.classList.add('sticky');
             } else {
-                statusElement.className = 'status offline';
-                statusText.textContent = 'Offline';
+                header.classList.remove('sticky');
+            }
+
+            lastScrollTop = scrollTop;
+        }
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', () => {
+            if (header.classList.contains('sticky')) {
+                header.classList.remove('sticky');
+                setTimeout(() => {
+                    if (window.pageYOffset > headerHeight + 50) {
+                        header.classList.add('sticky');
+                    }
+                }, 100);
+            }
+        });
+        // Section Navigation Function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const headerOffset = header.classList.contains('sticky') ? 80 : 120;
+                const elementPosition = section.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+                const clickedBtn = event.target.closest('.nav-btn');
+                if (clickedBtn) {
+                    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                    clickedBtn.classList.add('active');
+                    setTimeout(() => {
+                        clickedBtn.classList.remove('active');
+                    }, 2000);
+                }
             }
         }
-
+        function updateOnlineStatus() {
+            console.log(navigator.onLine ? 'Online' : 'Offline');
+        }
+        // Tool Modal Functions
+        function openPasswordGenerator() {
+            document.getElementById('password-generator-modal').classList.add('show');
+        }
+        function openBase64Tool() {
+            document.getElementById('base64-tool-modal').classList.add('show');
+        }
+        function openUrlShortener() {
+            document.getElementById('url-shortener-modal').classList.add('show');
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('tool-modal')) {
+                e.target.classList.remove('show');
+            }
+        });
+        // Color Picker Functionality
+        const colorNames = {
+            'red': '#FF0000', 'green': '#008000', 'blue': '#0000FF', 'yellow': '#FFFF00',
+            'orange': '#FFA500', 'purple': '#800080', 'pink': '#FFC0CB', 'brown': '#A52A2A',
+            'black': '#000000', 'white': '#FFFFFF', 'gray': '#808080', 'grey': '#808080',
+            'cyan': '#00FFFF', 'magenta': '#FF00FF', 'lime': '#00FF00', 'navy': '#000080',
+            'maroon': '#800000', 'olive': '#808000', 'teal': '#008080', 'silver': '#C0C0C0',
+            'gold': '#FFD700', 'coral': '#FF7F50', 'salmon': '#FA8072', 'khaki': '#F0E68C',
+            'violet': '#EE82EE', 'indigo': '#4B0082', 'turquoise': '#40E0D0', 'crimson': '#DC143C'
+        };
+        let currentSelectedColor = null;
+        function generateColorPalette() {
+            const palette = document.getElementById('color-palette');
+            const popularColors = [
+                '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF',
+                '#FFA500', '#800080', '#FFC0CB', '#A52A2A', '#808080', '#000000',
+                '#FFFFFF', '#FFD700', '#FF7F50', '#40E0D0', '#EE82EE', '#32CD32',
+                '#FF6347', '#4169E1', '#DC143C', '#00CED1', '#FF1493', '#7FFF00',
+                '#FF4500', '#9370DB', '#00FA9A', '#FF69B4', '#1E90FF', '#ADFF2F'
+            ];
+            palette.innerHTML = popularColors.map(color => `
+                <div class="palette-color"
+                     style="background-color: ${color}; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; margin: 3px; display: inline-block; border: 2px solid #ddd;"
+                     onclick="selectPaletteColor('${color}')"
+                     title="${color}">
+                </div>
+            `).join('');
+        }
+        function selectPaletteColor(color) {
+            currentSelectedColor = color;
+            document.getElementById('hex-value').textContent = color;
+            document.getElementById('color-preview-large').style.backgroundColor = color;
+            document.getElementById('color-result').style.display = 'block';
+            document.getElementById('visual-color-picker').value = color;
+        }
+        function openColorPicker() {
+            document.getElementById('color-picker-modal').classList.add('show');
+            generateColorPalette();
+        }
+        document.getElementById('color-name-input').addEventListener('input', function(e) {
+            const input = e.target.value.toLowerCase();
+            const suggestions = document.getElementById('color-suggestions');
+            if (input.length === 0) {
+                suggestions.style.display = 'none';
+                document.getElementById('color-result').style.display = 'none';
+                return;
+            }
+            const matches = Object.keys(colorNames).filter(color =>
+                color.toLowerCase().includes(input)
+            );
+            if (matches.length > 0) {
+                suggestions.innerHTML = matches.map(color => `
+                    <div class="color-suggestion" onclick="selectColor('${color}')">
+                        <div class="color-preview" style="background-color: ${colorNames[color]};"></div>
+                        <span>${color}</span>
+                    </div>
+                `).join('');
+                suggestions.style.display = 'block';
+            } else {
+                suggestions.style.display = 'none';
+            }
+            if (colorNames[input]) {
+                selectColor(input);
+            }
+        });
+        function selectColor(colorName) {
+            const hexValue = colorNames[colorName.toLowerCase()];
+            currentSelectedColor = hexValue;
+            document.getElementById('hex-value').textContent = hexValue;
+            document.getElementById('color-preview-large').style.backgroundColor = hexValue;
+            document.getElementById('color-result').style.display = 'block';
+            document.getElementById('color-suggestions').style.display = 'none';
+            document.getElementById('color-name-input').value = colorName;
+        }
+        document.getElementById('visual-color-picker').addEventListener('change', function(e) {
+            const selectedColor = e.target.value;
+            currentSelectedColor = selectedColor;
+            document.getElementById('hex-value').textContent = selectedColor;
+            document.getElementById('color-preview-large').style.backgroundColor = selectedColor;
+            document.getElementById('color-result').style.display = 'block';
+        });
+        document.getElementById('hex-color-input').addEventListener('input', function(e) {
+            let value = e.target.value.trim();
+            if (value && !value.startsWith('#')) {
+                value = '#' + value;
+                e.target.value = value;
+            }
+            const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+            if (hexRegex.test(value)) {
+                currentSelectedColor = value;
+                document.getElementById('hex-value').textContent = value;
+                document.getElementById('color-preview-large').style.backgroundColor = value;
+                document.getElementById('color-result').style.display = 'block';
+            } else if (value.length > 1) {
+                document.getElementById('color-result').style.display = 'none';
+            }
+        });
+        function applyBackgroundColor() {
+            if (currentSelectedColor) {
+                document.body.style.background = currentSelectedColor;
+                showNotification(`Pozadina promijenjena u ${currentSelectedColor}`, 'success');
+                closeModal('color-picker-modal');
+                document.getElementById('hex-color-input').value = '';
+                document.getElementById('color-name-input').value = '';
+                document.getElementById('visual-color-picker').value = '#667eea';
+                document.getElementById('color-result').style.display = 'none';
+            }
+        }
+        // Password Generator
+        let generatedPassword = '';
+        document.getElementById('password-length').addEventListener('input', function(e) {
+            document.getElementById('length-value').textContent = e.target.value;
+        });
+        function generatePassword() {
+            const length = parseInt(document.getElementById('password-length').value);
+            const includeUppercase = document.getElementById('include-uppercase').checked;
+            const includeLowercase = document.getElementById('include-lowercase').checked;
+            const includeNumbers = document.getElementById('include-numbers').checked;
+            const includeSymbols = document.getElementById('include-symbols').checked;
+            const symbolsLettersCombo = document.getElementById('symbols-letters-combo').checked;
+            let charset = '';
+            if (symbolsLettersCombo) {
+                charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+            } else {
+                if (includeUppercase) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                if (includeLowercase) charset += 'abcdefghijklmnopqrstuvwxyz';
+                if (includeNumbers) charset += '0123456789';
+                if (includeSymbols) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+            }
+            if (charset === '') {
+                showNotification('Molimo odaberite barem jednu opciju!', 'error');
+                return;
+            }
+            generatedPassword = '';
+            for (let i = 0; i < length; i++) {
+                generatedPassword += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+            document.getElementById('password-result').textContent = generatedPassword;
+            showNotification('Nova lozinka generirana!', 'success');
+        }
+        function copyPassword() {
+            if (generatedPassword) {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(generatedPassword).then(() => {
+                        showNotification('Lozinka kopirana!', 'success');
+                    });
+                } else {
+                    fallbackCopyToClipboard(generatedPassword);
+                }
+            } else {
+                showNotification('Prvo generirajte lozinku!', 'warning');
+            }
+        }
+        // Base64 Tool
+        function encodeBase64() {
+            const input = document.getElementById('base64-input').value;
+            if (input) {
+                try {
+                    const encoded = btoa(unescape(encodeURIComponent(input)));
+                    document.getElementById('base64-output').value = encoded;
+                    showNotification('Tekst kodiran u Base64!', 'success');
+                } catch (error) {
+                    showNotification('Greška pri kodiranju!', 'error');
+                }
+            } else {
+                showNotification('Unesite tekst za kodiranje!', 'warning');
+            }
+        }
+        function decodeBase64() {
+            const input = document.getElementById('base64-input').value;
+            if (input) {
+                try {
+                    const decoded = decodeURIComponent(escape(atob(input)));
+                    document.getElementById('base64-output').value = decoded;
+                    showNotification('Base64 dekodiran!', 'success');
+                } catch (error) {
+                    showNotification('Greška pri dekodiranju! Provjerite format.', 'error');
+                }
+            } else {
+                showNotification('Unesite Base64 tekst za dekodiranje!', 'warning');
+            }
+        }
+        function clearBase64() {
+            document.getElementById('base64-input').value = '';
+            document.getElementById('base64-output').value = '';
+            showNotification('Polja očišćena!', 'info');
+        }
+        function copyBase64Result() {
+            const result = document.getElementById('base64-output').value;
+            if (result) {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(result).then(() => {
+                        showNotification('Rezultat kopiran!', 'success');
+                    });
+                } else {
+                    fallbackCopyToClipboard(result);
+                }
+            } else {
+                showNotification('Nema rezultata za kopiranje!', 'warning');
+            }
+        }
+        // URL Shortener
+        function shortenUrl() {
+            const input = document.getElementById('url-input').value.trim();
+            if (!input) {
+                showNotification('Unesite URL za skraćivanje!', 'warning');
+                return;
+            }
+            let shortenedUrl;
+            try {
+                if (input.startsWith('file://')) {
+                    const pathMatch = input.match(/Markobrr\.github\.io/i);
+                    if (pathMatch) {
+                        shortenedUrl = 'https://Markobrr.github.io';
+                    } else {
+                        shortenedUrl = 'https://localhost';
+                    }
+                } else {
+                    const url = new URL(input);
+                    shortenedUrl = `${url.protocol}//${url.hostname}`;
+                }
+            } catch (e) {
+                showNotification('Unesite valjan URL!', 'error');
+                return;
+            }
+            document.getElementById('url-output').value = shortenedUrl;
+            showNotification('URL skraćen!', 'success');
+            sessionStorage.setItem('shortened-url', input);
+        }
+        function clearUrl() {
+            document.getElementById('url-input').value = '';
+            document.getElementById('url-output').value = '';
+            showNotification('Polja očišćena!', 'info');
+        }
+        function copyUrlResult() {
+            const result = document.getElementById('url-output').value;
+            if (result) {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(result).then(() => {
+                        showNotification('Skraćeni URL kopiran!', 'success');
+                    });
+                } else {
+                    fallbackCopyToClipboard(result);
+                }
+            } else {
+                showNotification('Nema URL-a za kopiranje!', 'warning');
+            }
+        }
+        function openShortenedUrl() {
+            const result = document.getElementById('url-output').value;
+            if (result) {
+                window.open(result, '_blank');
+                showNotification('Otvaranje skraćenog URL-a...', 'info');
+            } else {
+                showNotification('Nema URL-a za otvaranje!', 'warning');
+            }
+        }
         window.addEventListener('online', updateOnlineStatus);
         window.addEventListener('offline', updateOnlineStatus);
         updateOnlineStatus();
-
-        // Dashboard counter animations
+        // Dashboard counters
         function animateCounters() {
             const counters = ['user-count', 'notification-count', 'favorite-count', 'share-count'];
             const targets = [1247, 23, 156, 89];
-
             counters.forEach((id, index) => {
                 const element = document.getElementById(id);
                 const target = targets[index];
                 let current = 0;
                 const increment = target / 50;
-
                 const timer = setInterval(() => {
                     current += increment;
                     if (current >= target) {
@@ -244,10 +906,151 @@
                 }, 30);
             });
         }
-
-        // Start counter animation on load
         setTimeout(animateCounters, 500);
-
+        // Quick Actions
+        function shareApp() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Modern PWA',
+                    text: 'Check out this awesome Progressive Web App!',
+                    url: window.location.href
+                }).then(() => {
+                    console.log('App shared successfully');
+                }).catch((error) => {
+                    console.log('Error sharing:', error);
+                    fallbackShare();
+                });
+            } else {
+                fallbackShare();
+            }
+        }
+        function fallbackShare() {
+            copyToClipboard();
+            alert('App URL copied to clipboard! Share it with your friends.');
+        }
+        function fullscreenToggle() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().then(() => {
+                    console.log('Entered fullscreen mode');
+                }).catch((error) => {
+                    console.log('Error entering fullscreen:', error);
+                    alert('Fullscreen not supported on this device');
+                });
+            } else {
+                document.exitFullscreen().then(() => {
+                    console.log('Exited fullscreen mode');
+                });
+            }
+        }
+        function copyToClipboard() {
+            const url = window.location.href;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showNotification('URL copied to clipboard!', 'success');
+                }).catch(() => {
+                    fallbackCopyToClipboard(url);
+                });
+            } else {
+                fallbackCopyToClipboard(url);
+            }
+        }
+        function fallbackCopyToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showNotification('URL copied to clipboard!', 'success');
+            } catch (err) {
+                console.error('Fallback copy failed:', err);
+                alert('Copy failed. URL: ' + text);
+            }
+            document.body.removeChild(textArea);
+        }
+        function refreshData() {
+            showNotification('Refreshing data...', 'info');
+            animateCounters();
+            updateTime();
+            updateOnlineStatus();
+            setTimeout(() => {
+                showNotification('Data refreshed successfully!', 'success');
+            }, 1000);
+        }
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                z-index: 3000;
+                font-size: 0.9rem;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            document.body.appendChild(notification);
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        // Time and Date
+        function updateTime() {
+            const now = new Date();
+            const timeOptions = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const dateOptions = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
+            const timeString = now.toLocaleTimeString('en-US', timeOptions);
+            const dateString = now.toLocaleDateString('en-US', dateOptions);
+            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('current-date').textContent = dateString;
+            const resultsTime = document.getElementById('results-current-time');
+            const resultsDate = document.getElementById('results-current-date');
+            if (resultsTime) resultsTime.textContent = timeString;
+            if (resultsDate) resultsDate.textContent = dateString;
+            // Time zones
+            const timeZones = [
+                { id: 'zagreb-time', timezone: 'Europe/Zagreb' },
+                { id: 'london-time', timezone: 'Europe/London' },
+                { id: 'newyork-time', timezone: 'America/New_York' },
+                { id: 'tokyo-time', timezone: 'Asia/Tokyo' }
+            ];
+            timeZones.forEach(tz => {
+                const time = new Date().toLocaleTimeString('en-US', {
+                    timeZone: tz.timezone,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+                document.getElementById(tz.id).textContent = time;
+            });
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
         // Push Notifications
         async function toggleNotifications() {
             const btn = document.getElementById('notification-btn');
@@ -275,20 +1078,17 @@
                 alert('This browser does not support notifications.');
             }
         }
-
         // Camera Access
         async function openCamera() {
             const videoElement = document.getElementById('video');
             const canvasElement = document.getElementById('canvas');
             const photoResult = document.getElementById('photo-result');
             const cameraResult = document.getElementById('camera-result');
-
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
                 videoElement.srcObject = stream;
                 videoElement.style.display = 'block';
                 cameraResult.style.display = 'block';
-
                 // Add capture button
                 if (!document.getElementById('capture-btn')) {
                     const captureBtn = document.createElement('button');
@@ -300,10 +1100,8 @@
                         canvasElement.width = videoElement.videoWidth;
                         canvasElement.height = videoElement.videoHeight;
                         context.drawImage(videoElement, 0, 0);
-
                         const imageData = canvasElement.toDataURL('image/png');
                         photoResult.innerHTML = `<img src="${imageData}" style="max-width: 100%; border-radius: 8px;">`;
-
                         // Stop camera
                         stream.getTracks().forEach(track => track.stop());
                         videoElement.style.display = 'none';
@@ -316,36 +1114,36 @@
                 console.error('Camera error:', error);
             }
         }
-
-        // QR Code Generator (simple implementation)
+        // QR Code Generator
         function generateQR() {
             const qrResult = document.getElementById('qr-result');
             const qrInput = document.getElementById('qr-input');
             const qrDisplay = document.getElementById('qr-display');
-
             qrResult.style.display = 'block';
-
+            // Auto-generate QR code on input
             qrInput.addEventListener('input', () => {
-                const text = qrInput.value;
+                const text = qrInput.value.trim();
                 if (text) {
-                    // Using QR Server API for simplicity
                     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
                     qrDisplay.innerHTML = `<img src="${qrUrl}" alt="QR Code" style="max-width: 200px; border-radius: 8px;">`;
                 } else {
                     qrDisplay.innerHTML = '';
                 }
             });
+            // If there's already text, generate QR code immediately
+            if (qrInput.value.trim()) {
+                const text = qrInput.value.trim();
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
+                qrDisplay.innerHTML = `<img src="${qrUrl}" alt="QR Code" style="max-width: 200px; border-radius: 8px;">`;
+            }
         }
-
-        // Weather (mock implementation)
+        // Weather
         async function getWeather() {
             const weatherResult = document.getElementById('weather-result');
             const weatherDisplay = document.getElementById('weather-display');
-
             weatherResult.style.display = 'block';
             weatherDisplay.innerHTML = 'Loading weather...';
-
-            // Mock weather data (in real app, you'd use a weather API)
+            // Mock weather data
             setTimeout(() => {
                 const mockWeather = {
                     location: 'Zagreb, Croatia',
@@ -354,7 +1152,6 @@
                     humidity: '65%',
                     wind: '10 km/h'
                 };
-
                 weatherDisplay.innerHTML = `
                     <div class="weather-info">
                         <h4>${mockWeather.location}</h4>
@@ -366,11 +1163,319 @@
                             <span>Humidity: ${mockWeather.humidity}</span>
                             <span>Wind: ${mockWeather.wind}</span>
                         </div>
+                        <div style="margin-top: 15px;">
+                            <button class="btn primary" onclick="refreshWeather()">Refresh Weather</button>
+                        </div>
                     </div>
                 `;
             }, 1000);
         }
+        // Auto-load weather when page loads
+        function refreshWeather() {
+            getWeather();
+        }
+        // Load weather automatically on page load
+        setTimeout(() => {
+            getWeather();
+        }, 2000);
+        // Location functionality
+        async function getLocation() {
+            const locationResult = document.getElementById('location-result');
+            const locationDisplay = document.getElementById('location-display');
+            locationResult.style.display = 'block';
+            locationDisplay.innerHTML = 'Getting your location...';
+            if ('geolocation' in navigator) {
+                try {
+                    const position = await new Promise((resolve, reject) => {
+                        navigator.geolocation.getCurrentPosition(resolve, reject, {
+                            enableHighAccuracy: true,
+                            timeout: 10000,
+                            maximumAge: 60000
+                        });
+                    });
+                    const { latitude, longitude } = position.coords;
+                    const accuracy = position.coords.accuracy;
+                    locationDisplay.innerHTML = `
+                        <div class="location-info">
+                            <div class="location-coords">
+                                <h4>📍 Coordinates</h4>
+                                <p><strong>Latitude:</strong> ${latitude.toFixed(6)}</p>
+                                <p><strong>Longitude:</strong> ${longitude.toFixed(6)}</p>
+                                <p><strong>Accuracy:</strong> ±${Math.round(accuracy)}m</p>
+                            </div>
+                            <div class="location-actions">
+                                <button class="btn primary" onclick="openInMaps(${latitude}, ${longitude})">
+                                    Open in Maps
+                                </button>
+                                <button class="btn secondary" onclick="copyCoordinates(${latitude}, ${longitude})">
+                                    Copy Coordinates
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } catch (error) {
+                    locationDisplay.innerHTML = `
+                        <div class="error-message">
+                            <p>❌ Unable to get location</p>
+                            <p>Error: ${error.message}</p>
+                            <p>Please enable location services and try again.</p>
+                        </div>
+                    `;
+                }
+            } else {
+                locationDisplay.innerHTML = `
+                    <div class="error-message">
+                        <p>❌ Geolocation not supported</p>
+                        <p>Your browser doesn't support location services.</p>
+                    </div>
+                `;
+            }
+        }
+        function openInMaps(lat, lng) {
+            const url = `https://www.google.com/maps?q=${lat},${lng}`;
+            window.open(url, '_blank');
+        }
+        function copyCoordinates(lat, lng) {
+            const coords = `${lat}, ${lng}`;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(coords).then(() => {
+                    showNotification('Coordinates copied to clipboard!', 'success');
+                });
+            } else {
+                fallbackCopyToClipboard(coords);
+            }
+        }
+        // Device Info functionality
+        function deviceInfo() {
+            const deviceResult = document.getElementById('device-result');
+            const deviceDisplay = document.getElementById('device-display');
+            deviceResult.style.display = 'block';
+            deviceDisplay.innerHTML = 'Collecting device information...';
+            setTimeout(() => {
+                const info = {
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    languages: navigator.languages?.join(', ') || 'Not available',
+                    cookieEnabled: navigator.cookieEnabled,
+                    onLine: navigator.onLine,
+                    screenWidth: screen.width,
+                    screenHeight: screen.height,
+                    colorDepth: screen.colorDepth,
+                    pixelDepth: screen.pixelDepth,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    memory: navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Not available',
+                    cores: navigator.hardwareConcurrency || 'Not available',
+                    connection: navigator.connection ?
+                        `${navigator.connection.effectiveType} (${navigator.connection.downlink} Mbps)` :
+                        'Not available'
+                };
+                deviceDisplay.innerHTML = `
+                    <div class="device-info">
+                        <div class="info-section">
+                            <h4>🌐 Browser</h4>
+                            <p><strong>Platform:</strong> ${info.platform}</p>
+                            <p><strong>Language:</strong> ${info.language}</p>
+                            <p><strong>Languages:</strong> ${info.languages}</p>
+                            <p><strong>Cookies:</strong> ${info.cookieEnabled ? 'Enabled' : 'Disabled'}</p>
+                            <p><strong>Online:</strong> ${info.onLine ? 'Yes' : 'No'}</p>
+                        </div>
+                        <div class="info-section">
+                            <h4>📱 Display</h4>
+                            <p><strong>Resolution:</strong> ${info.screenWidth} × ${info.screenHeight}</p>
+                            <p><strong>Color Depth:</strong> ${info.colorDepth} bits</p>
+                            <p><strong>Pixel Depth:</strong> ${info.pixelDepth} bits</p>
+                        </div>
+                        <div class="info-section">
+                            <h4>⚙️ System</h4>
+                            <p><strong>Timezone:</strong> ${info.timezone}</p>
+                            <p><strong>Memory:</strong> ${info.memory}</p>
+                            <p><strong>CPU Cores:</strong> ${info.cores}</p>
+                            <p><strong>Connection:</strong> ${info.connection}</p>
+                        </div>
+                        <div class="info-actions">
+                            <button class="btn primary" onclick="copyDeviceInfo()">
+                                Copy All Info
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }, 500);
+        }
+        function copyDeviceInfo() {
+            const deviceInfo = document.getElementById('device-display').textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(deviceInfo).then(() => {
+                    showNotification('Device info copied to clipboard!', 'success');
+                });
+            } else {
+                fallbackCopyToClipboard(deviceInfo);
+            }
+        }
+        function downloadDeviceInfo() {
+            const info = {
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                languages: navigator.languages,
+                cookieEnabled: navigator.cookieEnabled,
+                onLine: navigator.onLine,
+                screen: {
+                    width: screen.width,
+                    height: screen.height,
+                    colorDepth: screen.colorDepth,
+                    pixelDepth: screen.pixelDepth
+                },
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                memory: navigator.deviceMemory,
+                cores: navigator.hardwareConcurrency,
+                connection: navigator.connection
+            };
+            const dataStr = JSON.stringify(info, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `device-info-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+            showNotification('Device info downloaded!', 'success');
+        }
+        // Network Info functionality
+        async function testConnectionSpeed() {
+            const speedResult = document.getElementById('speed-result');
+            speedResult.textContent = 'Testing...';
+            const startTime = performance.now();
+            const imageSize = 1024 * 1024; // 1MB test image
+            const testImage = `https://picsum.photos/${Math.sqrt(imageSize)}/${Math.sqrt(imageSize)}?random=${Date.now()}`;
+            try {
+                const response = await fetch(testImage);
+                const endTime = performance.now();
+                const duration = (endTime - startTime) / 1000; // seconds
+                const bitsLoaded = imageSize * 8;
+                const speedBps = bitsLoaded / duration;
+                const speedMbps = (speedBps / (1024 * 1024)).toFixed(2);
+                speedResult.innerHTML = `<strong>${speedMbps} Mbps</strong><br><small>${duration.toFixed(1)}s</small>`;
+                showNotification(`Speed test completed: ${speedMbps} Mbps`, 'success');
+            } catch (error) {
+                speedResult.innerHTML = '<span style="color: var(--danger-color);">Test failed</span>';
+                showNotification('Speed test failed', 'error');
+            }
+        }
+        async function pingTest() {
+            const pingResult = document.getElementById('ping-result');
+            pingResult.textContent = 'Pinging...';
+            const testUrls = [
+                'https://www.google.com/favicon.ico',
+                'https://www.cloudflare.com/favicon.ico',
+                'https://www.github.com/favicon.ico'
+            ];
+            let totalPing = 0;
+            let successCount = 0;
+            for (const url of testUrls) {
+                try {
+                    const startTime = performance.now();
+                    await fetch(url, { mode: 'no-cors', cache: 'no-cache' });
+                    const endTime = performance.now();
+                    const ping = endTime - startTime;
+                    totalPing += ping;
+                    successCount++;
+                } catch (error) {
+                    console.log(`Ping failed for ${url}`);
+                }
+            }
+            if (successCount > 0) {
+                const avgPing = (totalPing / successCount).toFixed(0);
+                pingResult.innerHTML = `<strong>${avgPing} ms</strong><br><small>avg latency</small>`;
+                showNotification(`Average ping: ${avgPing} ms`, 'success');
+            } else {
+                pingResult.innerHTML = '<span style="color: var(--danger-color);">Ping failed</span>';
+                showNotification('Ping test failed', 'error');
+            }
+        }
+        function showDetailedNetworkInfo() {
+            const networkDetails = document.getElementById('network-details');
+            if (navigator.connection) {
+                const conn = navigator.connection;
+                const info = {
+                    effectiveType: conn.effectiveType || 'Unknown',
+                    type: conn.type || 'Unknown',
+                    downlink: conn.downlink ? `${conn.downlink} Mbps` : 'Unknown',
+                    rtt: conn.rtt ? `${conn.rtt} ms` : 'Unknown',
+                    saveData: conn.saveData ? 'Enabled' : 'Disabled'
+                };
+                networkDetails.innerHTML = `
+                    <div class="network-info-detailed">
+                        <p><strong>Type:</strong> ${info.effectiveType}</p>
+                        <p><strong>Technology:</strong> ${info.type}</p>
+                        <p><strong>Speed:</strong> ${info.downlink}</p>
+                        <p><strong>RTT:</strong> ${info.rtt}</p>
+                        <p><strong>Data Saver:</strong> ${info.saveData}</p>
+                    </div>
+                `;
+            } else {
+                networkDetails.innerHTML = '<p style="color: var(--warning-color);">Network API not supported</p>';
+            }
+            showNotification('Network details updated', 'info');
+        }
+        // Slider functionality for results
+        function toggleSlider(containerId) {
+            const container = document.getElementById(containerId);
+            const content = container.querySelector('.result-content');
+            const toggleBtn = container.querySelector('.toggle-btn');
+            if (content.style.display === 'none' || content.style.maxHeight === '0px') {
+                content.style.display = 'block';
+                content.style.maxHeight = content.scrollHeight + 'px';
+                toggleBtn.textContent = '−';
+                container.classList.remove('collapsed');
+            } else {
+                content.style.maxHeight = '0px';
+                toggleBtn.textContent = '+';
+                container.classList.add('collapsed');
+                setTimeout(() => {
+                    if (container.classList.contains('collapsed')) {
+                        content.style.display = 'none';
+                    }
+                }, 300);
+            }
+        }
+        // Quick navigation functionality
+        function toggleResult(resultId) {
+            const resultContainer = document.getElementById(resultId);
+            const navBtn = document.querySelector(`[onclick="toggleResult('${resultId}')"]`);
 
+            if (resultContainer.style.display === 'none' || !resultContainer.style.display) {
+                resultContainer.style.display = 'block';
+                navBtn.classList.add('active');
+                const content = resultContainer.querySelector('.result-content');
+                const toggleBtn = resultContainer.querySelector('.toggle-btn');
+                if (content && (content.style.display === 'none' || content.style.maxHeight === '0px')) {
+                    content.style.display = 'block';
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    toggleBtn.textContent = '−';
+                    resultContainer.classList.remove('collapsed');
+                }
+                setTimeout(() => {
+                    resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            } else {
+                resultContainer.style.display = 'none';
+                navBtn.classList.remove('active');
+            }
+        }
+        // Initialize slider states
+        function initializeSliders() {
+            const sliderContainers = document.querySelectorAll('.slider-container');
+            sliderContainers.forEach(container => {
+                const content = container.querySelector('.result-content');
+                if (content) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.style.transition = 'max-height 0.3s ease';
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', initializeSliders);
         // Manual install button
         document.getElementById('manual-install').addEventListener('click', () => {
             if (document.getElementById('install-button')) {
