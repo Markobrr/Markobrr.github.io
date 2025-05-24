@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="A simple Progressive Web App example">
+
+    <!-- Title -->
+    <title>Simple PWA</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2980b9">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Simple PWA">
+
+    <!-- iOS Icons -->
+    <link rel="apple-touch-icon" href="images/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="images/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="128x128" href="images/icon-128x128.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="images/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="384x384" href="images/icon-384x384.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="images/icon-512x512.png">
+
+    <!-- Manifest File link -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="images/icon-512x512.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Simple PWA</h1>
+            <p>A simple Progressive Web App example</p>
+        </header>
+
+        <main>
+            <section>
+                <h2>Welcome to Simple PWA</h2>
+                <p>This is a Progressive Web App that demonstrates various PWA features including installation to home screen and responsive design.</p>
+                <button class="btn" onclick="showFeature('feature-1', null)">Learn More</button>
+            </section>
+
+            <section id="features-section">
+                <h2>Features</h2>
+                <p class="section-description">Explore the key features of our application</p>
+
+                <div class="icon-bar">
+                    <div class="icon-item">
+                        <img src="images/icon-home.svg" alt="Home" class="feature-icon" data-feature="feature-1">
+                        <span>Home</span>
+                    </div>
+                    <div class="icon-item">
+                        <img src="images/icon-settings.svg" alt="Settings" class="feature-icon" data-feature="feature-2">
+                        <span>Settings</span>
+                    </div>
+                    <div class="icon-item">
+                        <img src="images/icon-notification.svg" alt="Notifications" class="feature-icon" data-feature="feature-3">
+                        <span>Notifications</span>
+                    </div>
+                    <div class="icon-item">
+                        <img src="images/icon-user.svg" alt="User" class="feature-icon" data-feature="feature-4">
+                        <span>Profile</span>
+                    </div>
+                    <div class="icon-item">
+                        <img src="images/icon-share.svg" alt="Share" class="feature-icon" data-feature="feature-5">
+                        <span>Share</span>
+                    </div>
+                    <div class="icon-item">
+                        <img src="images/icon-favorite.svg" alt="Favorite" class="feature-icon" data-feature="feature-6">
+                        <span>Favorites</span>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <div id="feature-1" class="feature-card">
+                        <h3>Home</h3>
+                        <p>The main dashboard of the application.</p>
+                    </div>
+                    <div id="feature-2" class="feature-card">
+                        <h3>Settings</h3>
+                        <p>Configure your app preferences and options.</p>
+                    </div>
+                    <div id="feature-3" class="feature-card">
+                        <h3>Notifications</h3>
+                        <p>Stay updated with push notifications.</p>
+                    </div>
+                    <div id="feature-4" class="feature-card">
+                        <h3>Profile</h3>
+                        <p>Manage your user profile and preferences.</p>
+                    </div>
+                    <div id="feature-5" class="feature-card">
+                        <h3>Share</h3>
+                        <p>Share content with friends and colleagues.</p>
+                    </div>
+                    <div id="feature-6" class="feature-card">
+                        <h3>Favorites</h3>
+                        <p>Access your favorite items quickly.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="installation">
+                <h2>Installation</h2>
+                <p>Install this app on your device for a better experience:</p>
+                <ol>
+                    <li>Android: Tap the menu button and select "Add to Home screen"</li>
+                    <li>iOS: Tap the share button and select "Add to Home Screen"</li>
+                </ol>
+                <button class="btn" id="manual-install">Install Now</button>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Simple PWA. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Install prompt -->
+    <div id="install-prompt">
+        <p>Install this app on your device for quick access.</p>
+        <div>
+            <button id="install-button" class="btn">Install</button>
+            <button id="close-prompt" class="btn">Not Now</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script>
+        // Register the Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('serviceworker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Manual install button
+        document.getElementById('manual-install').addEventListener('click', () => {
+            if (document.getElementById('install-button')) {
+                document.getElementById('install-prompt').classList.add('show');
+            } else {
+                alert('Installation not available. Please use your browser menu to install this app.');
+            }
+        });
+    </script>
+</body>
+
+</html>

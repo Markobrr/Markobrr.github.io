@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            background-image: url('https://img.freepik.com/free-vector/hand-drawn-math-blackboard_23-2148141635.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-image: url('https://media.istockphoto.com/id/1141668764/vector/illustration-about-mathematics.jpg?s=612x612&w=0&k=20&c=82AmYYr2XS6KNR33itdltWSTqC3oAh72bQbYFI6oqFM=');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            z-index: 1;
+        }
+        
+        .container > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 0;
+        }
+
+        form {
+            background-color: transparent;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0069d9;
+        }
+
+        .operator-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            justify-content: space-between;
+        }
+
+        .operator-buttons button {
+            flex: 1;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid #ddd;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .operator-buttons button:hover {
+            background-color: #e9ecef;
+            border-color: #007bff;
+        }
+
+        .operator-buttons button.selected {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Izračunajte:</h1>
+        <form name="myform" onsubmit="return validateform()">
+        <label for="num1">Prvi broj:</label>
+        <input type="text" name="num1" id="num1">
+        <label for="num2">Drugi broj:</label>
+        <input type="text" name="num2" id="num2">
+        <label>Operator:</label>
+        <div class="operator-buttons">
+            <button type="button" onclick="selectOperator('+')" id="btn-plus">+</button>
+            <button type="button" onclick="selectOperator('-')" id="btn-minus">-</button>
+            <button type="button" onclick="selectOperator('*')" id="btn-multiply">×</button>
+            <button type="button" onclick="selectOperator('/')" id="btn-divide">÷</button>
+        </div>
+        <input type="hidden" name="operator" id="operator" value="">
+        <input type="submit" value="Izračunaj">
+        <label for="rezultat">Rezultat:</label>
+        <input type="text" name="rezultat" id="rezultat" readonly>
+        </form>
+    </div>
+    <script>
+        function selectOperator(op) {
+            // Ukloni selected klasu sa svih dugmadi
+            document.querySelectorAll('.operator-buttons button').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Dodaj selected klasu na kliknuto dugme
+            event.target.classList.add('selected');
+            
+            // Postavi vrijednost u hidden input
+            document.getElementById('operator').value = op;
+        }
+
+        function validateform() {
+            var num1 = document.myform.num1.value;
+            var num2 = document.myform.num2.value;
+            var operator = document.myform.operator.value;
+            if (num1 == null || num1 == "") {
+                alert("Niste unijeli prvi broj");
+                return false;
+            } else if (num2 == null || num2 == "") {
+                alert("Niste unijeli drugi broj");
+                return false;
+            } else if (operator == null || operator == "") {
+                alert("Niste odabrali operator");
+                return false;
+            } else if (isNaN(num1)) {
+                alert("Prvi broj mora biti broj");
+                return false;
+            } else if (isNaN(num2)) {
+                alert("Drugi broj mora biti broj");
+                return false;
+            } else {
+                var rezultat = eval(num1 + operator + num2);
+                document.getElementById("rezultat").value = rezultat;
+                return false; // Sprječava submitovanje forme
+            }
+        }
+    </script>
+</body>
+</html>
