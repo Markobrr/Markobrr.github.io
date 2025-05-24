@@ -44,84 +44,118 @@
 <body>
     <div class="container">
         <header>
-            <h1>Simple PWA</h1>
-            <p>A simple Progressive Web App example</p>
+            <div class="header-top">
+                <h1>Modern PWA</h1>
+                <div class="header-controls">
+                    <div class="theme-toggle">
+                        <img src="images/icon-settings.svg" alt="Theme" id="theme-toggle" class="control-icon">
+                    </div>
+                    <div class="status-indicator">
+                        <span id="online-status" class="status online">●</span>
+                        <span id="status-text">Online</span>
+                    </div>
+                </div>
+            </div>
+            <p>Progressive Web App with modern features</p>
         </header>
 
         <main>
-            <section>
-                <h2>Welcome to Simple PWA</h2>
-                <p>This is a Progressive Web App that demonstrates various PWA features including installation to home screen and responsive design.</p>
-                <button class="btn" onclick="showFeature('feature-1', null)">Learn More</button>
-            </section>
-
-            <section id="features-section">
-                <h2>Features</h2>
-                <p class="section-description">Explore the key features of our application</p>
-
-                <div class="icon-bar">
-                    <div class="icon-item">
-                        <img src="images/icon-home.svg" alt="Home" class="feature-icon" data-feature="feature-1">
-                        <span>Home</span>
+            <!-- Dashboard Section -->
+            <section id="dashboard">
+                <h2>📊 Dashboard</h2>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <img src="images/icon-user.svg" alt="Users" class="dashboard-icon">
+                        <div class="dashboard-info">
+                            <h3 id="user-count">1,247</h3>
+                            <p>Active Users</p>
+                        </div>
                     </div>
-                    <div class="icon-item">
-                        <img src="images/icon-settings.svg" alt="Settings" class="feature-icon" data-feature="feature-2">
-                        <span>Settings</span>
+                    <div class="dashboard-card">
+                        <img src="images/icon-notification.svg" alt="Notifications" class="dashboard-icon">
+                        <div class="dashboard-info">
+                            <h3 id="notification-count">23</h3>
+                            <p>Notifications</p>
+                        </div>
                     </div>
-                    <div class="icon-item">
-                        <img src="images/icon-notification.svg" alt="Notifications" class="feature-icon" data-feature="feature-3">
-                        <span>Notifications</span>
+                    <div class="dashboard-card">
+                        <img src="images/icon-favorite.svg" alt="Favorites" class="dashboard-icon">
+                        <div class="dashboard-info">
+                            <h3 id="favorite-count">156</h3>
+                            <p>Favorites</p>
+                        </div>
                     </div>
-                    <div class="icon-item">
-                        <img src="images/icon-user.svg" alt="User" class="feature-icon" data-feature="feature-4">
-                        <span>Profile</span>
-                    </div>
-                    <div class="icon-item">
-                        <img src="images/icon-share.svg" alt="Share" class="feature-icon" data-feature="feature-5">
-                        <span>Share</span>
-                    </div>
-                    <div class="icon-item">
-                        <img src="images/icon-favorite.svg" alt="Favorite" class="feature-icon" data-feature="feature-6">
-                        <span>Favorites</span>
-                    </div>
-                </div>
-
-                <div class="features">
-                    <div id="feature-1" class="feature-card">
-                        <h3>Home</h3>
-                        <p>The main dashboard of the application.</p>
-                    </div>
-                    <div id="feature-2" class="feature-card">
-                        <h3>Settings</h3>
-                        <p>Configure your app preferences and options.</p>
-                    </div>
-                    <div id="feature-3" class="feature-card">
-                        <h3>Notifications</h3>
-                        <p>Stay updated with push notifications.</p>
-                    </div>
-                    <div id="feature-4" class="feature-card">
-                        <h3>Profile</h3>
-                        <p>Manage your user profile and preferences.</p>
-                    </div>
-                    <div id="feature-5" class="feature-card">
-                        <h3>Share</h3>
-                        <p>Share content with friends and colleagues.</p>
-                    </div>
-                    <div id="feature-6" class="feature-card">
-                        <h3>Favorites</h3>
-                        <p>Access your favorite items quickly.</p>
+                    <div class="dashboard-card">
+                        <img src="images/icon-share.svg" alt="Shares" class="dashboard-icon">
+                        <div class="dashboard-info">
+                            <h3 id="share-count">89</h3>
+                            <p>Shares</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section id="installation">
-                <h2>Installation</h2>
-                <p>Install this app on your device for a better experience:</p>
-                <ol>
-                    <li>Android: Tap the menu button and select "Add to Home screen"</li>
-                    <li>iOS: Tap the share button and select "Add to Home Screen"</li>
-                </ol>
-                <button class="btn" id="manual-install">Install Now</button>
+            <!-- PWA Features Section -->
+            <section id="pwa-features">
+                <h2>🛠️ PWA Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card" onclick="toggleNotifications()">
+                        <img src="images/icon-notification.svg" alt="Notifications" class="feature-icon">
+                        <h3>Push Notifications</h3>
+                        <p>Enable notifications for updates</p>
+                        <button class="feature-btn" id="notification-btn">Enable</button>
+                    </div>
+
+                    <div class="feature-card" onclick="openCamera()">
+                        <img src="images/icon-user.svg" alt="Camera" class="feature-icon">
+                        <h3>Camera Access</h3>
+                        <p>Take photos with your camera</p>
+                        <button class="feature-btn">Open Camera</button>
+                    </div>
+
+                    <div class="feature-card" onclick="generateQR()">
+                        <img src="images/icon-share.svg" alt="QR Code" class="feature-icon">
+                        <h3>QR Generator</h3>
+                        <p>Generate QR codes instantly</p>
+                        <button class="feature-btn">Generate QR</button>
+                    </div>
+
+                    <div class="feature-card" onclick="getWeather()">
+                        <img src="images/icon-home.svg" alt="Weather" class="feature-icon">
+                        <h3>Weather</h3>
+                        <p>Check current weather</p>
+                        <button class="feature-btn">Get Weather</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results">
+                <div id="camera-result" class="result-container" style="display: none;">
+                    <h3>📸 Camera</h3>
+                    <video id="video" autoplay style="display: none;"></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <div id="photo-result"></div>
+                </div>
+
+                <div id="qr-result" class="result-container" style="display: none;">
+                    <h3>📱 QR Code Generator</h3>
+                    <input type="text" id="qr-input" placeholder="Enter text for QR code">
+                    <div id="qr-display"></div>
+                </div>
+
+                <div id="weather-result" class="result-container" style="display: none;">
+                    <h3>🌤️ Weather</h3>
+                    <div id="weather-display">Loading weather...</div>
+                </div>
+            </section>
+
+            <!-- Install Section -->
+            <section id="install-section">
+                <button class="btn install-btn" id="manual-install">
+                    <img src="images/icon-home.svg" alt="Install" class="btn-icon">
+                    Install App
+                </button>
             </section>
         </main>
         <footer>
@@ -152,6 +186,189 @@
                         console.error('Service Worker registration failed:', error);
                     });
             });
+        }
+
+        // Theme toggle functionality
+        let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        // Apply saved theme on load
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+        // Online/Offline status
+        function updateOnlineStatus() {
+            const statusElement = document.getElementById('online-status');
+            const statusText = document.getElementById('status-text');
+
+            if (navigator.onLine) {
+                statusElement.className = 'status online';
+                statusText.textContent = 'Online';
+            } else {
+                statusElement.className = 'status offline';
+                statusText.textContent = 'Offline';
+            }
+        }
+
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        updateOnlineStatus();
+
+        // Dashboard counter animations
+        function animateCounters() {
+            const counters = ['user-count', 'notification-count', 'favorite-count', 'share-count'];
+            const targets = [1247, 23, 156, 89];
+
+            counters.forEach((id, index) => {
+                const element = document.getElementById(id);
+                const target = targets[index];
+                let current = 0;
+                const increment = target / 50;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        element.textContent = target.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(current).toLocaleString();
+                    }
+                }, 30);
+            });
+        }
+
+        // Start counter animation on load
+        setTimeout(animateCounters, 500);
+
+        // Push Notifications
+        async function toggleNotifications() {
+            const btn = document.getElementById('notification-btn');
+
+            if ('Notification' in window) {
+                if (Notification.permission === 'granted') {
+                    new Notification('PWA Notification', {
+                        body: 'Notifications are working!',
+                        icon: 'images/icon-192x192.png'
+                    });
+                    btn.textContent = 'Enabled ✓';
+                } else if (Notification.permission !== 'denied') {
+                    const permission = await Notification.requestPermission();
+                    if (permission === 'granted') {
+                        new Notification('PWA Notification', {
+                            body: 'Notifications enabled successfully!',
+                            icon: 'images/icon-192x192.png'
+                        });
+                        btn.textContent = 'Enabled ✓';
+                    }
+                } else {
+                    alert('Notifications are blocked. Please enable them in browser settings.');
+                }
+            } else {
+                alert('This browser does not support notifications.');
+            }
+        }
+
+        // Camera Access
+        async function openCamera() {
+            const videoElement = document.getElementById('video');
+            const canvasElement = document.getElementById('canvas');
+            const photoResult = document.getElementById('photo-result');
+            const cameraResult = document.getElementById('camera-result');
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                videoElement.srcObject = stream;
+                videoElement.style.display = 'block';
+                cameraResult.style.display = 'block';
+
+                // Add capture button
+                if (!document.getElementById('capture-btn')) {
+                    const captureBtn = document.createElement('button');
+                    captureBtn.id = 'capture-btn';
+                    captureBtn.textContent = 'Take Photo';
+                    captureBtn.className = 'btn';
+                    captureBtn.onclick = () => {
+                        const context = canvasElement.getContext('2d');
+                        canvasElement.width = videoElement.videoWidth;
+                        canvasElement.height = videoElement.videoHeight;
+                        context.drawImage(videoElement, 0, 0);
+
+                        const imageData = canvasElement.toDataURL('image/png');
+                        photoResult.innerHTML = `<img src="${imageData}" style="max-width: 100%; border-radius: 8px;">`;
+
+                        // Stop camera
+                        stream.getTracks().forEach(track => track.stop());
+                        videoElement.style.display = 'none';
+                        captureBtn.remove();
+                    };
+                    cameraResult.appendChild(captureBtn);
+                }
+            } catch (error) {
+                alert('Camera access denied or not available.');
+                console.error('Camera error:', error);
+            }
+        }
+
+        // QR Code Generator (simple implementation)
+        function generateQR() {
+            const qrResult = document.getElementById('qr-result');
+            const qrInput = document.getElementById('qr-input');
+            const qrDisplay = document.getElementById('qr-display');
+
+            qrResult.style.display = 'block';
+
+            qrInput.addEventListener('input', () => {
+                const text = qrInput.value;
+                if (text) {
+                    // Using QR Server API for simplicity
+                    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
+                    qrDisplay.innerHTML = `<img src="${qrUrl}" alt="QR Code" style="max-width: 200px; border-radius: 8px;">`;
+                } else {
+                    qrDisplay.innerHTML = '';
+                }
+            });
+        }
+
+        // Weather (mock implementation)
+        async function getWeather() {
+            const weatherResult = document.getElementById('weather-result');
+            const weatherDisplay = document.getElementById('weather-display');
+
+            weatherResult.style.display = 'block';
+            weatherDisplay.innerHTML = 'Loading weather...';
+
+            // Mock weather data (in real app, you'd use a weather API)
+            setTimeout(() => {
+                const mockWeather = {
+                    location: 'Zagreb, Croatia',
+                    temperature: '22°C',
+                    condition: 'Sunny',
+                    humidity: '65%',
+                    wind: '10 km/h'
+                };
+
+                weatherDisplay.innerHTML = `
+                    <div class="weather-info">
+                        <h4>${mockWeather.location}</h4>
+                        <div class="weather-main">
+                            <span class="temp">${mockWeather.temperature}</span>
+                            <span class="condition">${mockWeather.condition}</span>
+                        </div>
+                        <div class="weather-details">
+                            <span>Humidity: ${mockWeather.humidity}</span>
+                            <span>Wind: ${mockWeather.wind}</span>
+                        </div>
+                    </div>
+                `;
+            }, 1000);
         }
 
         // Manual install button
