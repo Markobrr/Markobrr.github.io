@@ -711,3 +711,111 @@ footer {
     background-color: rgba(255, 255, 255, 0.2);
     transform: scale(1.1);
 }
+
+/* Todo App Preview Styles */
+.todo-preview {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.todo-header {
+    margin-bottom: 20px;
+}
+
+.todo-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.todo-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.todo-item {
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    padding: 12px 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item.completed {
+    background: rgba(255, 255, 255, 0.8);
+    opacity: 0.8;
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.todo-text {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.todo-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-complete,
+.btn-undo,
+.btn-edit,
+.btn-delete {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.btn-complete {
+    background: #28a745;
+    color: white;
+}
+
+.btn-undo {
+    background: #ffc107;
+    color: #333;
+}
+
+.btn-edit {
+    background: #17a2b8;
+    color: white;
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.project-card:hover .todo-item {
+    transform: translateX(2px);
+}
+
+.project-card:hover .btn-complete,
+.project-card:hover .btn-undo,
+.project-card:hover .btn-edit,
+.project-card:hover .btn-delete {
+    transform: scale(1.1);
+}
