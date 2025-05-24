@@ -481,12 +481,34 @@ footer {
     }
 
     /* Osiguraj da se slika uvijek prikaže prva na mobilnim uređajima */
-    .product-image-container {
-        order: 1; /* Slika uvijek prva */
+    /* Za redove gdje je slika u .left - normalan redoslijed */
+    .product-grid:nth-child(1) .product-card.left,
+    .product-grid:nth-child(3) .product-card.left,
+    .product-grid:nth-child(5) .product-card.left,
+    .product-grid:nth-child(7) .product-card.left {
+        order: 1; /* Slika prva */
     }
 
-    .product-info {
-        order: 2; /* Tekst uvijek drugi */
+    .product-grid:nth-child(1) .product-card.right,
+    .product-grid:nth-child(3) .product-card.right,
+    .product-grid:nth-child(5) .product-card.right,
+    .product-grid:nth-child(7) .product-card.right {
+        order: 2; /* Tekst drugi */
+    }
+
+    /* Za redove gdje je slika u .right - obrnut redoslijed */
+    .product-grid:nth-child(2) .product-card.left,
+    .product-grid:nth-child(4) .product-card.left,
+    .product-grid:nth-child(6) .product-card.left,
+    .product-grid:nth-child(8) .product-card.left {
+        order: 2; /* Tekst drugi */
+    }
+
+    .product-grid:nth-child(2) .product-card.right,
+    .product-grid:nth-child(4) .product-card.right,
+    .product-grid:nth-child(6) .product-card.right,
+    .product-grid:nth-child(8) .product-card.right {
+        order: 1; /* Slika prva */
     }
 
     .product-image {
