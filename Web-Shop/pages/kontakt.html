@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernShop | Kontakt</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .contact-info {
+            background-color: var(--gray-100);
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius-md);
+        }
+
+        .contact-info-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .contact-info-icon {
+            font-size: var(--font-size-xl);
+            color: var(--primary-color);
+            margin-right: var(--spacing-md);
+            width: 24px;
+            text-align: center;
+        }
+
+        .contact-info-content {
+            flex: 1;
+        }
+
+        .contact-info-label {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .contact-social {
+            margin-top: var(--spacing-lg);
+        }
+
+        .contact-social-title {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .contact-social-icons {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .contact-social-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray-200);
+            border-radius: 50%;
+            color: var(--gray-700);
+            transition: all var(--transition-fast);
+        }
+
+        .contact-social-icon:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .contact-hours {
+            margin-top: var(--spacing-lg);
+        }
+
+        .contact-hours-title {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .hours-table {
+            width: 100%;
+        }
+
+        .hours-table tr {
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .hours-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .hours-table td {
+            padding: var(--spacing-xs) 0;
+        }
+
+        .hours-table td:last-child {
+            text-align: right;
+        }
+
+        .contact-form-container {
+            background-color: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .contact-form-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .contact-form .form-row {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .contact-map {
+            height: 400px;
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .contact-map img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .faq-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .faq-title {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: var(--spacing-md);
+            background-color: var(--gray-100);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: '\f107';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            transition: transform var(--transition-fast);
+        }
+
+        .faq-question.active::after {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: var(--spacing-md);
+            border-top: 1px solid var(--gray-300);
+            display: none;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <img src="../img/logo-fin.svg" alt="ModernShop Logo" width="180" height="40">
+            </a>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Početna</a></li>
+                    <li><a href="proizvodi.html">Proizvodi</a></li>
+                    <li><a href="o-nama.html">O nama</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <form class="search-form">
+                    <input type="search" placeholder="Pretraži...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+
+                <button class="dark-mode-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <a href="prijava.html" class="header-icon" aria-label="Moj račun">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <a href="kosarica.html" class="header-icon" aria-label="Košarica">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <a href="../index.html">Početna</a>
+                <span class="separator"><i class="fas fa-chevron-right"></i></span>
+                <span>Kontakt</span>
+            </div>
+
+            <h1 class="mb-4">Kontaktirajte nas</h1>
+
+            <!-- Contact Content -->
+            <div class="contact-container">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h2 class="contact-info-title">Kontakt informacije</h2>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <div class="contact-info-label">Adresa</div>
+                            <div>Ulica Primjer 123, 10000 Zagreb, Hrvatska</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <div class="contact-info-label">Telefon</div>
+                            <div>+385 1 234 5678</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-info-content">
+                            <div class="contact-info-label">Email</div>
+                            <div>info@modernshop.hr</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-hours">
+                        <div class="contact-hours-title">Radno vrijeme</div>
+                        <table class="hours-table">
+                            <tr>
+                                <td>Ponedjeljak - Petak</td>
+                                <td>9:00 - 17:00</td>
+                            </tr>
+                            <tr>
+                                <td>Subota</td>
+                                <td>10:00 - 14:00</td>
+                            </tr>
+                            <tr>
+                                <td>Nedjelja</td>
+                                <td>Zatvoreno</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="contact-social">
+                        <div class="contact-social-title">Pratite nas</div>
+                        <div class="contact-social-icons">
+                            <a href="#" class="contact-social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="contact-social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="contact-social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="contact-social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <h2 class="contact-form-title">Pošaljite nam poruku</h2>
+
+                    <form class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Ime i prezime *</label>
+                                <input type="text" id="name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email adresa *</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Telefon</label>
+                                <input type="tel" id="phone" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Predmet *</label>
+                                <input type="text" id="subject" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="message" class="form-label">Poruka *</label>
+                            <textarea id="message" class="form-control" rows="6" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Pošalji poruku</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div class="contact-map">
+                <img src="https://via.placeholder.com/1200x400?text=Google+Maps" alt="Map">
+            </div>
+
+            <!-- FAQ Section -->
+            <section class="faq-section">
+                <h2 class="faq-title">Često postavljana pitanja</h2>
+
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <div class="faq-question">Kako mogu pratiti svoju narudžbu?</div>
+                        <div class="faq-answer">
+                            <p>Nakon što vaša narudžba bude poslana, dobit ćete email s brojem za praćenje. Možete koristiti taj broj na našoj stranici u sekciji "Prati narudžbu" ili direktno na stranici dostavne službe.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Koji su načini plaćanja dostupni?</div>
+                        <div class="faq-answer">
+                            <p>Prihvaćamo plaćanje kreditnim karticama (Visa, MasterCard, American Express), PayPal-om i plaćanje pouzećem (gotovinom prilikom preuzimanja).</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Koliko traje dostava?</div>
+                        <div class="faq-answer">
+                            <p>Dostava obično traje 2-5 radnih dana, ovisno o vašoj lokaciji. Za područje grada Zagreba dostava je moguća i isti dan za narudžbe zaprimljene do 12:00.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Kako mogu vratiti proizvod?</div>
+                        <div class="faq-answer">
+                            <p>Proizvode možete vratiti u roku od 14 dana od primitka. Proizvod mora biti nekorišten i u originalnom pakiranju. Za povrat, molimo kontaktirajte našu korisničku podršku kako biste dobili upute za povrat.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Je li dostava besplatna?</div>
+                        <div class="faq-answer">
+                            <p>Dostava je besplatna za sve narudžbe iznad 50 €. Za narudžbe ispod tog iznosa, trošak dostave je 5 €.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <p>Niste pronašli odgovor na svoje pitanje?</p>
+                    <a href="#" class="btn btn-outline mt-2">Pošaljite nam upit</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h4>O nama</h4>
+                    <p>ModernShop je vodeći online trgovac s dugogodišnjim iskustvom u pružanju visokokvalitetnih proizvoda po pristupačnim cijenama.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Korisni linkovi</h4>
+                    <ul>
+                        <li><a href="o-nama.html">O nama</a></li>
+                        <li><a href="faq.html">Česta pitanja</a></li>
+                        <li><a href="uvjeti-koristenja.html">Uvjeti korištenja</a></li>
+                        <li><a href="politika-privatnosti.html">Politika privatnosti</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Kategorije</h4>
+                    <ul>
+                        <li><a href="proizvodi.html">Kategorija 1</a></li>
+                        <li><a href="proizvodi.html">Kategorija 2</a></li>
+                        <li><a href="proizvodi.html">Kategorija 3</a></li>
+                        <li><a href="proizvodi.html">Kategorija 4</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Kontakt</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Ulica Primjer 123, 10000 Zagreb</li>
+                        <li><i class="fas fa-phone"></i> +385 1 234 5678</li>
+                        <li><i class="fas fa-envelope"></i> info@modernshop.hr</li>
+                        <li><i class="fas fa-clock"></i> Pon - Pet: 9:00 - 17:00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 ModernShop. Sva prava pridržana.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

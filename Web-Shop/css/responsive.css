@@ -1,0 +1,315 @@
+/* Responsive Styles */
+
+/* Large Devices (Desktops, less than 1200px) */
+@media (max-width: 1199.98px) {
+  :root {
+    --container-max-width: 960px;
+  }
+  
+  .footer-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Medium Devices (Tablets, less than 992px) */
+@media (max-width: 991.98px) {
+  :root {
+    --container-max-width: 720px;
+  }
+  
+  h1 {
+    font-size: calc(var(--font-size-4xl) * 0.9);
+  }
+  
+  h2 {
+    font-size: calc(var(--font-size-3xl) * 0.9);
+  }
+  
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .product-details {
+    flex-direction: column;
+  }
+  
+  .product-gallery {
+    width: 100%;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .product-info {
+    width: 100%;
+  }
+  
+  .two-column-layout {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .sidebar {
+    order: 2;
+  }
+  
+  .main-content {
+    order: 1;
+  }
+}
+
+/* Small Devices (Landscape Phones, less than 768px) */
+@media (max-width: 767.98px) {
+  :root {
+    --container-max-width: 540px;
+  }
+  
+  .header-container {
+    flex-wrap: wrap;
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  .main-nav {
+    display: none;
+    width: 100%;
+    order: 3;
+    margin-top: var(--spacing-md);
+  }
+  
+  .main-nav.active {
+    display: block;
+  }
+  
+  .main-nav ul {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .search-form {
+    margin-left: auto;
+  }
+  
+  .search-form input {
+    width: 120px;
+  }
+  
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .cart-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .checkout-form {
+    flex-direction: column;
+  }
+  
+  .checkout-form-left,
+  .checkout-form-right {
+    width: 100%;
+  }
+  
+  .checkout-form-right {
+    margin-top: var(--spacing-xl);
+  }
+}
+
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media (max-width: 575.98px) {
+  h1 {
+    font-size: calc(var(--font-size-4xl) * 0.8);
+  }
+  
+  h2 {
+    font-size: calc(var(--font-size-3xl) * 0.8);
+  }
+  
+  .header-container {
+    padding: var(--spacing-sm) var(--container-padding);
+  }
+  
+  .logo {
+    font-size: var(--font-size-xl);
+  }
+  
+  .logo img {
+    height: 30px;
+  }
+  
+  .header-actions {
+    gap: var(--spacing-sm);
+  }
+  
+  .search-form {
+    display: none;
+  }
+  
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero-content h1 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .hero-content p {
+    font-size: var(--font-size-md);
+  }
+  
+  .section-title h2 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .product-thumbnails {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .related-products {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Specific Components Responsive Styles */
+
+/* Hero Section */
+@media (max-width: 991.98px) {
+  .hero-section {
+    height: 400px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-section {
+    height: 350px;
+  }
+  
+  .hero-content {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero-section {
+    height: 300px;
+  }
+}
+
+/* Category Cards */
+@media (max-width: 991.98px) {
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Blog Grid */
+@media (max-width: 991.98px) {
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Team Grid */
+@media (max-width: 991.98px) {
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Testimonials */
+@media (max-width: 767.98px) {
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Contact Page */
+@media (max-width: 991.98px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-info {
+    margin-bottom: var(--spacing-xl);
+  }
+}
+
+/* FAQ Page */
+@media (max-width: 767.98px) {
+  .faq-categories {
+    flex-direction: column;
+  }
+  
+  .faq-category {
+    width: 100%;
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+/* Account Page */
+@media (max-width: 767.98px) {
+  .account-tabs {
+    flex-direction: column;
+  }
+  
+  .account-tab {
+    width: 100%;
+    margin-bottom: var(--spacing-xs);
+  }
+}
+
+/* Login/Register Page */
+@media (max-width: 767.98px) {
+  .auth-container {
+    flex-direction: column;
+  }
+  
+  .auth-form {
+    width: 100%;
+  }
+  
+  .auth-form:first-child {
+    margin-bottom: var(--spacing-xl);
+  }
+}

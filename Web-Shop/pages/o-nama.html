@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernShop | O nama</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .about-hero {
+            position: relative;
+            height: 400px;
+            margin-bottom: var(--spacing-2xl);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+        }
+
+        .about-hero-image {
+            width: 100%;
+            height: 100%;
+        }
+
+        .about-hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+        }
+
+        .about-hero-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--spacing-xl);
+            color: white;
+        }
+
+        .about-hero-title {
+            font-size: var(--font-size-4xl);
+            margin-bottom: var(--spacing-md);
+            color: white;
+        }
+
+        .about-hero-subtitle {
+            font-size: var(--font-size-xl);
+            max-width: 600px;
+        }
+
+        .about-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .about-section-title {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            position: relative;
+            padding-bottom: var(--spacing-sm);
+        }
+
+        .about-section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+
+        .about-image {
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-text h3 {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .about-text p {
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-loose);
+        }
+
+        .about-values {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+
+        .value-card {
+            text-align: center;
+            padding: var(--spacing-lg);
+            background-color: var(--gray-100);
+            border-radius: var(--border-radius-md);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .value-title {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .team-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-lg);
+        }
+
+        .stats-section {
+            background-color: var(--primary-color);
+            color: white;
+            padding: var(--spacing-2xl) 0;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: var(--spacing-md);
+        }
+
+        .stat-number {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .stat-label {
+            font-size: var(--font-size-md);
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: var(--spacing-2xl) 0;
+            background-color: var(--gray-100);
+            border-radius: var(--border-radius-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .cta-title {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta-text {
+            max-width: 600px;
+            margin: 0 auto var(--spacing-lg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <img src="../img/logo-fin.svg" alt="ModernShop Logo" width="180" height="40">
+            </a>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Početna</a></li>
+                    <li><a href="proizvodi.html">Proizvodi</a></li>
+                    <li><a href="o-nama.html">O nama</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <form class="search-form">
+                    <input type="search" placeholder="Pretraži...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+
+                <button class="dark-mode-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <a href="prijava.html" class="header-icon" aria-label="Moj račun">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <a href="kosarica.html" class="header-icon" aria-label="Košarica">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- About Hero -->
+        <div class="about-hero">
+            <div class="about-hero-image">
+                <img src="https://picsum.photos/1200/400?random=31" alt="About Us Hero">
+            </div>
+            <div class="about-hero-overlay"></div>
+            <div class="container">
+                <div class="about-hero-content">
+                    <h1 class="about-hero-title">O nama</h1>
+                    <p class="about-hero-subtitle">Otkrijte našu priču, misiju i vrijednosti koje nas vode u pružanju najboljih proizvoda i usluga.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <a href="../index.html">Početna</a>
+                <span class="separator"><i class="fas fa-chevron-right"></i></span>
+                <span>O nama</span>
+            </div>
+
+            <!-- Our Story Section -->
+            <section class="about-section">
+                <h2 class="about-section-title">Naša priča</h2>
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="https://picsum.photos/600/400?random=32" alt="Our Story">
+                    </div>
+                    <div class="about-text">
+                        <h3>Kako je sve počelo</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.</p>
+                        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <p>Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mission & Vision Section -->
+            <section class="about-section">
+                <h2 class="about-section-title">Misija i vizija</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Naša misija</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.</p>
+
+                        <h3>Naša vizija</h3>
+                        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://picsum.photos/600/400?random=33" alt="Mission & Vision">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Our Values Section -->
+            <section class="about-section">
+                <h2 class="about-section-title">Naše vrijednosti</h2>
+                <div class="about-values">
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="value-title">Kvaliteta</h3>
+                        <p>Posvećeni smo pružanju proizvoda najviše kvalitete koji nadmašuju očekivanja naših kupaca.</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="value-title">Strast</h3>
+                        <p>Naša strast prema onome što radimo pokreće nas da kontinuirano unapređujemo naše proizvode i usluge.</p>
+                    </div>
+
+                    <div class="value-card">
+                        <div class="value-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="value-title">Integritet</h3>
+                        <p>Poslujemo s najvišim standardima integriteta i transparentnosti u svim našim odnosima.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="container">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">Godina iskustva</div>
+                        </div>
+
+                        <div class="stat-item">
+                            <div class="stat-number">5000+</div>
+                            <div class="stat-label">Zadovoljnih kupaca</div>
+                        </div>
+
+                        <div class="stat-item">
+                            <div class="stat-number">1000+</div>
+                            <div class="stat-label">Proizvoda</div>
+                        </div>
+
+                        <div class="stat-item">
+                            <div class="stat-number">20+</div>
+                            <div class="stat-label">Nagrada</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Our Team Section -->
+            <section class="team-section">
+                <h2 class="about-section-title">Naš tim</h2>
+                <div class="team-grid">
+                    <!-- Team Member 1 -->
+                    <div class="team-card">
+                        <div class="team-card-image">
+                            <img src="https://picsum.photos/400/400?random=34" alt="Team Member 1">
+                        </div>
+                        <div class="team-card-content">
+                            <h3 class="team-card-name">Ivan Horvat</h3>
+                            <div class="team-card-position">CEO & Osnivač</div>
+                            <div class="team-card-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member 2 -->
+                    <div class="team-card">
+                        <div class="team-card-image">
+                            <img src="https://picsum.photos/400/400?random=35" alt="Team Member 2">
+                        </div>
+                        <div class="team-card-content">
+                            <h3 class="team-card-name">Ana Kovač</h3>
+                            <div class="team-card-position">Marketing Manager</div>
+                            <div class="team-card-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member 3 -->
+                    <div class="team-card">
+                        <div class="team-card-image">
+                            <img src="https://picsum.photos/400/400?random=36" alt="Team Member 3">
+                        </div>
+                        <div class="team-card-content">
+                            <h3 class="team-card-name">Marko Novak</h3>
+                            <div class="team-card-position">Voditelj prodaje</div>
+                            <div class="team-card-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member 4 -->
+                    <div class="team-card">
+                        <div class="team-card-image">
+                            <img src="https://picsum.photos/400/400?random=37" alt="Team Member 4">
+                        </div>
+                        <div class="team-card-content">
+                            <h3 class="team-card-name">Petra Marić</h3>
+                            <div class="team-card-position">Voditelj korisničke podrške</div>
+                            <div class="team-card-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <div class="container">
+                    <h2 class="cta-title">Pridružite nam se na putovanju</h2>
+                    <p class="cta-text">Želite li saznati više o našim proizvodima ili imate pitanja? Kontaktirajte nas i naš tim će vam rado pomoći.</p>
+                    <a href="kontakt.html" class="btn btn-primary">Kontaktirajte nas</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h4>O nama</h4>
+                    <p>ModernShop je vodeći online trgovac s dugogodišnjim iskustvom u pružanju visokokvalitetnih proizvoda po pristupačnim cijenama.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Korisni linkovi</h4>
+                    <ul>
+                        <li><a href="o-nama.html">O nama</a></li>
+                        <li><a href="faq.html">Česta pitanja</a></li>
+                        <li><a href="uvjeti-koristenja.html">Uvjeti korištenja</a></li>
+                        <li><a href="politika-privatnosti.html">Politika privatnosti</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Kategorije</h4>
+                    <ul>
+                        <li><a href="proizvodi.html">Kategorija 1</a></li>
+                        <li><a href="proizvodi.html">Kategorija 2</a></li>
+                        <li><a href="proizvodi.html">Kategorija 3</a></li>
+                        <li><a href="proizvodi.html">Kategorija 4</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Kontakt</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Ulica Primjer 123, 10000 Zagreb</li>
+                        <li><i class="fas fa-phone"></i> +385 1 234 5678</li>
+                        <li><i class="fas fa-envelope"></i> info@modernshop.hr</li>
+                        <li><i class="fas fa-clock"></i> Pon - Pet: 9:00 - 17:00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 ModernShop. Sva prava pridržana.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

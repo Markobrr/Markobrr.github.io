@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proizvodi - TechShop</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CSS Variables - Basic set for this page */
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3f37c9;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --border-radius-sm: 0.25rem;
+            --border-radius-md: 0.5rem;
+            --border-radius-lg: 1rem;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition-normal: 300ms;
+            --transition-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+            --z-index-modal: 1050;
+            --font-weight-bold: 700;
+        }
+
+        /* Product Page Specific Styles */
+        .products-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: var(--spacing-xl) 0;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .products-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: var(--font-weight-bold);
+        }
+
+        .products-header p {
+            margin: var(--spacing-sm) 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .products-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        /* Filters Sidebar */
+        .filters-sidebar {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .filter-section {
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .filter-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .filter-title {
+            font-size: 1.1rem;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-md);
+            color: var(--gray-900);
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .filter-option input[type="checkbox"] {
+            margin-right: var(--spacing-sm);
+            transform: scale(1.1);
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            color: var(--gray-700);
+        }
+
+        .price-range {
+            display: flex;
+            gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .price-input {
+            flex: 1;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.9rem;
+        }
+
+        /* Products Content */
+        .products-content {
+            min-height: 600px;
+        }
+
+        .products-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-md);
+            background: white;
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .products-count {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        .sort-select {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius-sm);
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Enhanced Product Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .product-card-enhanced {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .product-card-enhanced:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image-container {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card-enhanced:hover .product-image-container img {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            z-index: 2;
+        }
+
+        .badge-sale {
+            background: #e91e63;
+        }
+
+        .badge-new {
+            background: #2196f3;
+        }
+
+        .badge-bestseller {
+            background: #ff9800;
+        }
+
+        .product-info {
+            padding: var(--spacing-lg);
+        }
+
+        .product-category-small {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.3;
+        }
+
+        .product-price-container {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .current-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .old-price {
+            font-size: 1rem;
+            color: var(--gray-400);
+            text-decoration: line-through;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: var(--spacing-md);
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-xl);
+        }
+
+        .pagination-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            background: white;
+            color: var(--gray-700);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn:hover,
+        .pagination-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Dark Mode */
+        body.dark-mode .filters-sidebar,
+        body.dark-mode .products-toolbar,
+        body.dark-mode .product-card-enhanced {
+            background: #2d2d2d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .filter-title {
+            color: #ffffff;
+        }
+
+        body.dark-mode .filter-option label {
+            color: #cccccc;
+        }
+
+        body.dark-mode .product-title {
+            color: #ffffff;
+        }
+
+        body.dark-mode .product-category-small {
+            color: #999999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .products-container {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+
+            .filters-sidebar {
+                position: static;
+                order: 2;
+            }
+
+            .products-content {
+                order: 1;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+
+            .products-toolbar {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                align-items: stretch;
+            }
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: var(--z-index-modal);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal) ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--gray-300);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Product Modal */
+        .product-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: var(--z-index-modal);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal) ease;
+        }
+
+        .product-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .product-modal-content {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            padding: var(--spacing-xl);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: none;
+            border: none;
+            font-size: var(--font-size-2xl);
+            cursor: pointer;
+            color: var(--gray-600);
+            z-index: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--gray-900);
+        }
+
+        .modal-product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: var(--border-radius-md);
+        }
+
+        .modal-product-info h3 {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .product-card-category {
+            font-size: var(--font-size-sm);
+            color: var(--gray-500);
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .product-card-price {
+            margin: var(--spacing-md) 0;
+        }
+
+        @media (max-width: 768px) {
+            .product-modal-content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+                padding: var(--spacing-md);
+            }
+        }
+
+        /* Basic button styles */
+        .btn {
+            display: inline-block;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: 1px solid transparent;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-normal) ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-lg {
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: 1.125rem;
+        }
+
+        /* Fallback styles if CSS variables don't load */
+        .products-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 1.5rem !important;
+            margin-bottom: 2rem !important;
+        }
+
+        .product-card-enhanced {
+            background: white !important;
+            border-radius: 16px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+            overflow: hidden !important;
+            transition: all 0.3s ease !important;
+            cursor: pointer !important;
+        }
+
+        .product-image-container {
+            position: relative !important;
+            aspect-ratio: 1 !important;
+            overflow: hidden !important;
+            background: #f8f9fa !important;
+        }
+
+        .product-image-container img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+
+        .product-info {
+            padding: 1rem !important;
+        }
+
+        .product-title {
+            font-size: 1.1rem !important;
+            font-weight: 600 !important;
+            margin-bottom: 0.5rem !important;
+        }
+
+        .current-price {
+            font-size: 1.3rem !important;
+            font-weight: 700 !important;
+            color: #4361ee !important;
+        }
+
+        .add-to-cart-btn {
+            width: 100% !important;
+            padding: 0.75rem !important;
+            background: #4361ee !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+        }
+
+        /* Collapsible header styles */
+        .collapsible-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible-header:hover {
+            color: var(--primary-color);
+        }
+
+        .collapsible-header i {
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-header.active i {
+            transform: rotate(180deg);
+        }
+
+        .brands-container {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        /* Filter buttons styles */
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .filter-btn {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #495057;
+            white-space: nowrap;
+        }
+
+        .filter-btn:hover {
+            background: #e9ecef;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .filter-btn .count {
+            opacity: 0.7;
+            font-size: 0.8rem;
+        }
+
+        /* Filter titles */
+        .filter-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--gray-800);
+            text-align: left;
+        }
+
+        /* Price range improvements */
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .price-input-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .price-label {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .price-input {
+            padding: 8px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            width: 100%;
+        }
+
+        .price-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.1);
+        }
+
+        .price-separator {
+            color: var(--gray-500);
+            font-weight: 500;
+            margin-top: 20px;
+        }
+
+        .price-currency {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <img src="../img/logo-fin.svg" alt="ModernShop Logo" width="180" height="40">
+            </a>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Početna</a></li>
+                    <li><a href="proizvodi.html" class="active">Proizvodi</a></li>
+                    <li><a href="o-nama.html">O nama</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <form class="search-form">
+                    <input type="search" placeholder="Pretraži...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+
+                <button class="dark-mode-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <a href="prijava.html" class="header-icon" aria-label="Moj račun">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <a href="kosarica.html" class="header-icon" aria-label="Košarica">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Products Header -->
+    <section class="products-header">
+        <div class="container">
+            <h1 id="pageTitle">Svi proizvodi</h1>
+            <p id="pageDescription">Otkrijte našu kompletnu kolekciju najnovije tehnologije</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="products-container">
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar">
+                <div class="filter-section">
+                    <h3 class="filter-title">Kategorije</h3>
+                    <div class="filter-buttons">
+                        <button class="filter-btn" data-category="mobiteli" onclick="toggleCategoryFilter(this)">
+                            Mobiteli <span class="count">(22)</span>
+                        </button>
+                        <button class="filter-btn" data-category="laptopi" onclick="toggleCategoryFilter(this)">
+                            Laptopi <span class="count">(14)</span>
+                        </button>
+                        <button class="filter-btn" data-category="tableti" onclick="toggleCategoryFilter(this)">
+                            Tableti <span class="count">(10)</span>
+                        </button>
+                        <button class="filter-btn" data-category="gaming" onclick="toggleCategoryFilter(this)">
+                            Gaming <span class="count">(6)</span>
+                        </button>
+                        <button class="filter-btn" data-category="dodaci" onclick="toggleCategoryFilter(this)">
+                            Dodaci <span class="count">(20)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3 class="filter-title collapsible-header" onclick="toggleBrands()">
+                        Brendovi <i class="fas fa-chevron-down" id="brandsChevron"></i>
+                    </h3>
+                    <div class="brands-container" id="brandsContainer" style="display: none;">
+                        <div class="filter-buttons">
+                            <button class="filter-btn" data-brand="Apple" onclick="toggleBrandFilter(this)">Apple</button>
+                            <button class="filter-btn" data-brand="Samsung" onclick="toggleBrandFilter(this)">Samsung</button>
+                            <button class="filter-btn" data-brand="Google" onclick="toggleBrandFilter(this)">Google</button>
+                            <button class="filter-btn" data-brand="OnePlus" onclick="toggleBrandFilter(this)">OnePlus</button>
+                            <button class="filter-btn" data-brand="Xiaomi" onclick="toggleBrandFilter(this)">Xiaomi</button>
+                            <button class="filter-btn" data-brand="Dell" onclick="toggleBrandFilter(this)">Dell</button>
+                            <button class="filter-btn" data-brand="HP" onclick="toggleBrandFilter(this)">HP</button>
+                            <button class="filter-btn" data-brand="Lenovo" onclick="toggleBrandFilter(this)">Lenovo</button>
+                            <button class="filter-btn" data-brand="ASUS" onclick="toggleBrandFilter(this)">ASUS</button>
+                            <button class="filter-btn" data-brand="Microsoft" onclick="toggleBrandFilter(this)">Microsoft</button>
+                            <button class="filter-btn" data-brand="Sony" onclick="toggleBrandFilter(this)">Sony</button>
+                            <button class="filter-btn" data-brand="Nintendo" onclick="toggleBrandFilter(this)">Nintendo</button>
+                            <button class="filter-btn" data-brand="Valve" onclick="toggleBrandFilter(this)">Valve</button>
+                            <button class="filter-btn" data-brand="Logitech" onclick="toggleBrandFilter(this)">Logitech</button>
+                            <button class="filter-btn" data-brand="JBL" onclick="toggleBrandFilter(this)">JBL</button>
+                            <button class="filter-btn" data-brand="NVIDIA" onclick="toggleBrandFilter(this)">NVIDIA</button>
+                            <button class="filter-btn" data-brand="OPPO" onclick="toggleBrandFilter(this)">OPPO</button>
+                            <button class="filter-btn" data-brand="Vivo" onclick="toggleBrandFilter(this)">Vivo</button>
+                            <button class="filter-btn" data-brand="Honor" onclick="toggleBrandFilter(this)">Honor</button>
+                            <button class="filter-btn" data-brand="Nothing" onclick="toggleBrandFilter(this)">Nothing</button>
+                            <button class="filter-btn" data-brand="Realme" onclick="toggleBrandFilter(this)">Realme</button>
+                            <button class="filter-btn" data-brand="Razer" onclick="toggleBrandFilter(this)">Razer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3 class="filter-title">Cijena</h3>
+                    <div class="price-range">
+                        <div class="price-input-group">
+                            <label for="minPrice" class="price-label">Od</label>
+                            <input type="number" class="price-input" id="minPrice" placeholder="0">
+                        </div>
+                        <span class="price-separator">-</span>
+                        <div class="price-input-group">
+                            <label for="maxPrice" class="price-label">Do</label>
+                            <input type="number" class="price-input" id="maxPrice" placeholder="9999">
+                        </div>
+                    </div>
+                    <div class="price-currency">€</div>
+                </div>
+
+                <button class="btn btn-primary" onclick="applyFilters()" style="width: 100%; margin-top: var(--spacing-md);">
+                    Primijeni filtere
+                </button>
+
+                <button class="btn btn-outline" onclick="clearFilters()" style="width: 100%; margin-top: var(--spacing-sm);">
+                    Očisti filtere
+                </button>
+            </aside>
+
+            <!-- Products Content -->
+            <div class="products-content">
+                <div class="products-toolbar">
+                    <div class="products-count" id="productsCount">
+                        Prikazano 1-12 od 72 proizvoda
+                    </div>
+
+                    <select class="sort-select" id="sortSelect" onchange="applyFilters()">
+                        <option value="default">Sortiraj po</option>
+                        <option value="price-low">Cijena: Niska → Visoka</option>
+                        <option value="price-high">Cijena: Visoka → Niska</option>
+                        <option value="name-asc">Naziv: A → Z</option>
+                        <option value="name-desc">Naziv: Z → A</option>
+                        <option value="newest">Najnoviji</option>
+                    </select>
+                </div>
+
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here by JavaScript -->
+                </div>
+
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-content">
+            <button class="modal-close" onclick="closeProductModal()">&times;</button>
+            <img class="modal-product-image" id="modalProductImage" src="" alt="">
+            <div class="modal-product-info">
+                <div class="product-card-category" id="modalProductCategory"></div>
+                <h3 id="modalProductTitle"></h3>
+                <div class="product-card-price">
+                    <span class="current-price" id="modalCurrentPrice"></span>
+                    <span class="old-price" id="modalOldPrice"></span>
+                </div>
+                <p id="modalProductDescription"></p>
+                <ul id="modalProductSpecs"></ul>
+                <button class="btn btn-primary btn-lg" id="modalAddToCartBtn">Dodaj u košaricu</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/products.js"></script>
+    <script src="../js/products-page.js"></script>
+</body>
+</html>

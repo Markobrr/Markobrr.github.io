@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernShop | Plaćanje</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: var(--spacing-xl);
+        }
+
+        .checkout-form {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .checkout-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .checkout-section-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-xs);
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-col-full {
+            grid-column: span 2;
+        }
+
+        .shipping-same-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .shipping-same-checkbox input {
+            margin-right: var(--spacing-xs);
+        }
+
+        .payment-methods {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-md);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-sm);
+            cursor: pointer;
+            transition: border-color var(--transition-fast);
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+
+        .payment-method.active {
+            border-color: var(--primary-color);
+            background-color: rgba(58, 134, 255, 0.05);
+        }
+
+        .payment-method-radio {
+            margin-right: var(--spacing-md);
+        }
+
+        .payment-method-info {
+            flex: 1;
+        }
+
+        .payment-method-title {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .payment-method-description {
+            font-size: var(--font-size-sm);
+            color: var(--gray-600);
+        }
+
+        .payment-method-icon {
+            font-size: var(--font-size-xl);
+            color: var(--gray-700);
+        }
+
+        .credit-card-form {
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            background-color: var(--gray-100);
+            border-radius: var(--border-radius-md);
+        }
+
+        .card-icons {
+            display: flex;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .card-icon {
+            font-size: var(--font-size-xl);
+            color: var(--gray-700);
+        }
+
+        .card-number-group {
+            position: relative;
+        }
+
+        .card-number-icon {
+            position: absolute;
+            right: var(--spacing-sm);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-600);
+        }
+
+        .card-expiry-cvv {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .order-summary {
+            background-color: var(--gray-100);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            position: sticky;
+            top: calc(var(--spacing-xl) + 80px);
+        }
+
+        .order-summary-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .order-summary-products {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .order-product {
+            display: flex;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .order-product-image {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+            margin-right: var(--spacing-sm);
+        }
+
+        .order-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .order-product-info {
+            flex: 1;
+        }
+
+        .order-product-title {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .order-product-variant {
+            font-size: var(--font-size-sm);
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .order-product-price {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--font-size-sm);
+        }
+
+        .order-summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .order-summary-label {
+            font-weight: var(--font-weight-medium);
+        }
+
+        .order-summary-value {
+            text-align: right;
+        }
+
+        .order-summary-total {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-bold);
+            margin-top: var(--spacing-md);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--gray-300);
+        }
+
+        .order-button {
+            width: 100%;
+            margin-top: var(--spacing-lg);
+        }
+
+        .order-terms {
+            font-size: var(--font-size-sm);
+            color: var(--gray-600);
+            margin-top: var(--spacing-md);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <img src="../img/logo-fin.svg" alt="ModernShop Logo" width="180" height="40">
+            </a>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Početna</a></li>
+                    <li><a href="proizvodi.html">Proizvodi</a></li>
+                    <li><a href="o-nama.html">O nama</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <form class="search-form">
+                    <input type="search" placeholder="Pretraži...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+
+                <a href="prijava.html" class="header-icon">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <a href="kosarica.html" class="header-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">3</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <a href="../index.html">Početna</a>
+                <span class="separator"><i class="fas fa-chevron-right"></i></span>
+                <a href="kosarica.html">Košarica</a>
+                <span class="separator"><i class="fas fa-chevron-right"></i></span>
+                <span>Plaćanje</span>
+            </div>
+
+            <h1 class="mb-4">Plaćanje</h1>
+
+            <!-- Checkout Content -->
+            <div class="checkout-container">
+                <div class="checkout-main">
+                    <form class="checkout-form">
+                        <!-- Customer Information -->
+                        <div class="checkout-section">
+                            <h2 class="checkout-section-title">Osobni podaci</h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first-name" class="form-label">Ime *</label>
+                                    <input type="text" id="first-name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name" class="form-label">Prezime *</label>
+                                    <input type="text" id="last-name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email adresa *</label>
+                                    <input type="email" id="email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Telefon *</label>
+                                    <input type="tel" id="phone" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <div class="checkout-section">
+                            <h2 class="checkout-section-title">Adresa dostave</h2>
+                            <div class="form-row">
+                                <div class="form-group form-col-full">
+                                    <label for="address" class="form-label">Adresa *</label>
+                                    <input type="text" id="address" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city" class="form-label">Grad *</label>
+                                    <input type="text" id="city" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postal-code" class="form-label">Poštanski broj *</label>
+                                    <input type="text" id="postal-code" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group form-col-full">
+                                    <label for="country" class="form-label">Država *</label>
+                                    <select id="country" class="form-control" required>
+                                        <option value="">Odaberite državu</option>
+                                        <option value="HR" selected>Hrvatska</option>
+                                        <option value="SI">Slovenija</option>
+                                        <option value="AT">Austrija</option>
+                                        <option value="DE">Njemačka</option>
+                                        <option value="IT">Italija</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group form-col-full">
+                                    <label for="order-notes" class="form-label">Napomene za dostavu</label>
+                                    <textarea id="order-notes" class="form-control" rows="3" placeholder="Posebne napomene za dostavu (opcionalno)"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Billing Address -->
+                        <div class="checkout-section">
+                            <h2 class="checkout-section-title">Adresa za račun</h2>
+                            <div class="shipping-same-checkbox">
+                                <input type="checkbox" id="shipping-same" checked>
+                                <label for="shipping-same">Ista kao adresa dostave</label>
+                            </div>
+
+                            <!-- Billing address form fields (hidden by default) -->
+                            <div id="billing-address-fields" style="display: none;">
+                                <!-- Billing address form fields would go here -->
+                            </div>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="checkout-section">
+                            <h2 class="checkout-section-title">Način plaćanja</h2>
+                            <div class="payment-methods">
+                                <!-- Credit Card Payment -->
+                                <div class="payment-method active">
+                                    <input type="radio" name="payment-method" id="payment-card" class="payment-method-radio" checked>
+                                    <div class="payment-method-info">
+                                        <div class="payment-method-title">Kreditna kartica</div>
+                                        <div class="payment-method-description">Sigurno plaćanje putem kreditne kartice</div>
+                                    </div>
+                                    <div class="payment-method-icon">
+                                        <i class="far fa-credit-card"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Credit Card Form -->
+                                <div class="credit-card-form">
+                                    <div class="card-icons">
+                                        <i class="fab fa-cc-visa card-icon"></i>
+                                        <i class="fab fa-cc-mastercard card-icon"></i>
+                                        <i class="fab fa-cc-amex card-icon"></i>
+                                        <i class="fab fa-cc-discover card-icon"></i>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="card-name" class="form-label">Ime na kartici *</label>
+                                        <input type="text" id="card-name" class="form-control" placeholder="Ime i prezime na kartici" required>
+                                    </div>
+
+                                    <div class="form-group mb-3 card-number-group">
+                                        <label for="card-number" class="form-label">Broj kartice *</label>
+                                        <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456" required>
+                                        <i class="fas fa-lock card-number-icon"></i>
+                                    </div>
+
+                                    <div class="card-expiry-cvv">
+                                        <div class="form-group">
+                                            <label for="card-expiry" class="form-label">Datum isteka *</label>
+                                            <input type="text" id="card-expiry" class="form-control" placeholder="MM/GG" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="card-cvv" class="form-label">CVV *</label>
+                                            <input type="text" id="card-cvv" class="form-control" placeholder="123" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PayPal Payment -->
+                                <div class="payment-method">
+                                    <input type="radio" name="payment-method" id="payment-paypal" class="payment-method-radio">
+                                    <div class="payment-method-info">
+                                        <div class="payment-method-title">PayPal</div>
+                                        <div class="payment-method-description">Plaćanje putem PayPal računa</div>
+                                    </div>
+                                    <div class="payment-method-icon">
+                                        <i class="fab fa-paypal"></i>
+                                    </div>
+                                </div>
+
+                                <!-- Cash on Delivery -->
+                                <div class="payment-method">
+                                    <input type="radio" name="payment-method" id="payment-cod" class="payment-method-radio">
+                                    <div class="payment-method-info">
+                                        <div class="payment-method-title">Plaćanje pouzećem</div>
+                                        <div class="payment-method-description">Plaćanje gotovinom prilikom preuzimanja</div>
+                                    </div>
+                                    <div class="payment-method-icon">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="checkout-sidebar">
+                    <div class="order-summary">
+                        <h2 class="order-summary-title">Pregled narudžbe</h2>
+
+                        <div class="order-summary-products">
+                            <!-- Product 1 -->
+                            <div class="order-product">
+                                <div class="order-product-image">
+                                    <img src="https://picsum.photos/200/200?random=28" alt="Product 1">
+                                </div>
+                                <div class="order-product-info">
+                                    <div class="order-product-title">Proizvod 1</div>
+                                    <div class="order-product-variant">Veličina: M, Boja: Crvena</div>
+                                    <div class="order-product-price">
+                                        <span>1 x 99,99 €</span>
+                                        <span>99,99 €</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product 2 -->
+                            <div class="order-product">
+                                <div class="order-product-image">
+                                    <img src="https://picsum.photos/200/200?random=29" alt="Product 2">
+                                </div>
+                                <div class="order-product-info">
+                                    <div class="order-product-title">Proizvod 2</div>
+                                    <div class="order-product-variant">Veličina: L, Boja: Plava</div>
+                                    <div class="order-product-price">
+                                        <span>2 x 79,99 €</span>
+                                        <span>159,98 €</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product 3 -->
+                            <div class="order-product">
+                                <div class="order-product-image">
+                                    <img src="https://picsum.photos/200/200?random=30" alt="Product 3">
+                                </div>
+                                <div class="order-product-info">
+                                    <div class="order-product-title">Proizvod 3</div>
+                                    <div class="order-product-variant">Veličina: S, Boja: Crna</div>
+                                    <div class="order-product-price">
+                                        <span>1 x 149,99 €</span>
+                                        <span>149,99 €</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-summary-row">
+                            <div class="order-summary-label">Ukupno proizvoda</div>
+                            <div class="order-summary-value">409,96 €</div>
+                        </div>
+
+                        <div class="order-summary-row">
+                            <div class="order-summary-label">Popust</div>
+                            <div class="order-summary-value">0,00 €</div>
+                        </div>
+
+                        <div class="order-summary-row">
+                            <div class="order-summary-label">Dostava</div>
+                            <div class="order-summary-value">Besplatno</div>
+                        </div>
+
+                        <div class="order-summary-row order-summary-total">
+                            <div class="order-summary-label">Ukupno za platiti</div>
+                            <div class="order-summary-value">409,96 €</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary order-button">Potvrdi narudžbu</button>
+
+                        <div class="order-terms">
+                            Klikom na "Potvrdi narudžbu" prihvaćate naše <a href="uvjeti-koristenja.html">Uvjete korištenja</a> i <a href="politika-privatnosti.html">Politiku privatnosti</a>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h4>O nama</h4>
+                    <p>ModernShop je vodeći online trgovac s dugogodišnjim iskustvom u pružanju visokokvalitetnih proizvoda po pristupačnim cijenama.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Korisni linkovi</h4>
+                    <ul>
+                        <li><a href="o-nama.html">O nama</a></li>
+                        <li><a href="faq.html">Česta pitanja</a></li>
+                        <li><a href="uvjeti-koristenja.html">Uvjeti korištenja</a></li>
+                        <li><a href="politika-privatnosti.html">Politika privatnosti</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Kategorije</h4>
+                    <ul>
+                        <li><a href="proizvodi.html">Kategorija 1</a></li>
+                        <li><a href="proizvodi.html">Kategorija 2</a></li>
+                        <li><a href="proizvodi.html">Kategorija 3</a></li>
+                        <li><a href="proizvodi.html">Kategorija 4</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Kontakt</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Ulica Primjer 123, 10000 Zagreb</li>
+                        <li><i class="fas fa-phone"></i> +385 1 234 5678</li>
+                        <li><i class="fas fa-envelope"></i> info@modernshop.hr</li>
+                        <li><i class="fas fa-clock"></i> Pon - Pet: 9:00 - 17:00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 ModernShop. Sva prava pridržana.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

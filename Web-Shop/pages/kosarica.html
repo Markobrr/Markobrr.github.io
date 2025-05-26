@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernShop | Košarica</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .cart-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: var(--spacing-xl);
+        }
+
+        .cart-items {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cart-table th {
+            text-align: left;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-300);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .cart-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--gray-300);
+            vertical-align: middle;
+        }
+
+        .cart-product {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-product-image {
+            width: 80px;
+            height: 80px;
+            margin-right: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+        }
+
+        .cart-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-product-info h3 {
+            margin-bottom: var(--spacing-xs);
+            font-size: var(--font-size-md);
+        }
+
+        .cart-product-variant {
+            font-size: var(--font-size-sm);
+            color: var(--gray-600);
+        }
+
+        .cart-quantity {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-quantity-btn {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray-200);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cart-quantity-input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid var(--gray-300);
+            margin: 0 var(--spacing-xs);
+        }
+
+        .cart-remove {
+            color: var(--danger-color);
+            cursor: pointer;
+        }
+
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--spacing-lg);
+        }
+
+        .cart-coupon {
+            display: flex;
+            max-width: 350px;
+        }
+
+        .cart-coupon input {
+            flex: 1;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--gray-300);
+            border-right: none;
+            border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+        }
+
+        .cart-coupon button {
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+            cursor: pointer;
+        }
+
+        .cart-summary {
+            background-color: var(--gray-100);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+        }
+
+        .cart-summary-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .cart-summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .cart-summary-label {
+            font-weight: var(--font-weight-medium);
+        }
+
+        .cart-summary-value {
+            text-align: right;
+        }
+
+        .cart-summary-total {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-bold);
+            margin-top: var(--spacing-md);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--gray-300);
+        }
+
+        .cart-summary-buttons {
+            margin-top: var(--spacing-lg);
+        }
+
+        .cart-summary-buttons .btn {
+            width: 100%;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: var(--spacing-2xl) 0;
+        }
+
+        .empty-cart-icon {
+            font-size: 4rem;
+            color: var(--gray-400);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .empty-cart-message {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-lg);
+            color: var(--gray-700);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">
+                <img src="../img/logo-fin.svg" alt="ModernShop Logo" width="180" height="40">
+            </a>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="../index.html">Početna</a></li>
+                    <li><a href="proizvodi.html">Proizvodi</a></li>
+                    <li><a href="o-nama.html">O nama</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <form class="search-form">
+                    <input type="search" placeholder="Pretraži...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+
+                <a href="prijava.html" class="header-icon">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <a href="kosarica.html" class="header-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">3</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <a href="../index.html">Početna</a>
+                <span class="separator"><i class="fas fa-chevron-right"></i></span>
+                <span>Košarica</span>
+            </div>
+
+            <h1 class="mb-4">Moja košarica</h1>
+
+            <!-- Cart Content -->
+            <div class="cart-container">
+                <div class="cart-main">
+                    <div class="cart-items">
+                        <table class="cart-table">
+                            <thead>
+                                <tr>
+                                    <th>Proizvod</th>
+                                    <th>Cijena</th>
+                                    <th>Količina</th>
+                                    <th>Ukupno</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Cart Item 1 -->
+                                <tr>
+                                    <td>
+                                        <div class="cart-product">
+                                            <div class="cart-product-image">
+                                                <img src="https://picsum.photos/200/200?random=28" alt="Product 1">
+                                            </div>
+                                            <div class="cart-product-info">
+                                                <h3>Proizvod 1</h3>
+                                                <div class="cart-product-variant">Veličina: M, Boja: Crvena</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>99,99 €</td>
+                                    <td>
+                                        <div class="cart-quantity">
+                                            <button class="cart-quantity-btn">-</button>
+                                            <input type="number" class="cart-quantity-input" value="1" min="1">
+                                            <button class="cart-quantity-btn">+</button>
+                                        </div>
+                                    </td>
+                                    <td>99,99 €</td>
+                                    <td><i class="fas fa-trash cart-remove"></i></td>
+                                </tr>
+
+                                <!-- Cart Item 2 -->
+                                <tr>
+                                    <td>
+                                        <div class="cart-product">
+                                            <div class="cart-product-image">
+                                                <img src="https://picsum.photos/200/200?random=29" alt="Product 2">
+                                            </div>
+                                            <div class="cart-product-info">
+                                                <h3>Proizvod 2</h3>
+                                                <div class="cart-product-variant">Veličina: L, Boja: Plava</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>79,99 €</td>
+                                    <td>
+                                        <div class="cart-quantity">
+                                            <button class="cart-quantity-btn">-</button>
+                                            <input type="number" class="cart-quantity-input" value="2" min="1">
+                                            <button class="cart-quantity-btn">+</button>
+                                        </div>
+                                    </td>
+                                    <td>159,98 €</td>
+                                    <td><i class="fas fa-trash cart-remove"></i></td>
+                                </tr>
+
+                                <!-- Cart Item 3 -->
+                                <tr>
+                                    <td>
+                                        <div class="cart-product">
+                                            <div class="cart-product-image">
+                                                <img src="https://picsum.photos/200/200?random=30" alt="Product 3">
+                                            </div>
+                                            <div class="cart-product-info">
+                                                <h3>Proizvod 3</h3>
+                                                <div class="cart-product-variant">Veličina: S, Boja: Crna</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>149,99 €</td>
+                                    <td>
+                                        <div class="cart-quantity">
+                                            <button class="cart-quantity-btn">-</button>
+                                            <input type="number" class="cart-quantity-input" value="1" min="1">
+                                            <button class="cart-quantity-btn">+</button>
+                                        </div>
+                                    </td>
+                                    <td>149,99 €</td>
+                                    <td><i class="fas fa-trash cart-remove"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="cart-actions">
+                        <div class="cart-coupon">
+                            <input type="text" placeholder="Kod za popust">
+                            <button>Primijeni</button>
+                        </div>
+                        <a href="proizvodi.html" class="btn btn-outline">Nastavi s kupovinom</a>
+                    </div>
+                </div>
+
+                <div class="cart-sidebar">
+                    <div class="cart-summary">
+                        <h2 class="cart-summary-title">Sažetak narudžbe</h2>
+
+                        <div class="cart-summary-row">
+                            <div class="cart-summary-label">Ukupno proizvoda</div>
+                            <div class="cart-summary-value">409,96 €</div>
+                        </div>
+
+                        <div class="cart-summary-row">
+                            <div class="cart-summary-label">Popust</div>
+                            <div class="cart-summary-value">0,00 €</div>
+                        </div>
+
+                        <div class="cart-summary-row">
+                            <div class="cart-summary-label">Dostava</div>
+                            <div class="cart-summary-value">Besplatno</div>
+                        </div>
+
+                        <div class="cart-summary-row cart-summary-total">
+                            <div class="cart-summary-label">Ukupno za platiti</div>
+                            <div class="cart-summary-value">409,96 €</div>
+                        </div>
+
+                        <div class="cart-summary-buttons">
+                            <a href="placanje.html" class="btn btn-primary">Nastavi na plaćanje</a>
+                            <a href="proizvodi.html" class="btn btn-outline">Nastavi s kupovinom</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty Cart (Hidden by default) -->
+            <div class="empty-cart" style="display: none;">
+                <div class="empty-cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h2 class="empty-cart-message">Vaša košarica je prazna</h2>
+                <p class="mb-4">Izgleda da još niste dodali proizvode u košaricu.</p>
+                <a href="proizvodi.html" class="btn btn-primary">Pregledaj proizvode</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h4>O nama</h4>
+                    <p>ModernShop je vodeći online trgovac s dugogodišnjim iskustvom u pružanju visokokvalitetnih proizvoda po pristupačnim cijenama.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Korisni linkovi</h4>
+                    <ul>
+                        <li><a href="o-nama.html">O nama</a></li>
+                        <li><a href="faq.html">Česta pitanja</a></li>
+                        <li><a href="uvjeti-koristenja.html">Uvjeti korištenja</a></li>
+                        <li><a href="politika-privatnosti.html">Politika privatnosti</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Kategorije</h4>
+                    <ul>
+                        <li><a href="proizvodi.html">Kategorija 1</a></li>
+                        <li><a href="proizvodi.html">Kategorija 2</a></li>
+                        <li><a href="proizvodi.html">Kategorija 3</a></li>
+                        <li><a href="proizvodi.html">Kategorija 4</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Kontakt</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Ulica Primjer 123, 10000 Zagreb</li>
+                        <li><i class="fas fa-phone"></i> +385 1 234 5678</li>
+                        <li><i class="fas fa-envelope"></i> info@modernshop.hr</li>
+                        <li><i class="fas fa-clock"></i> Pon - Pet: 9:00 - 17:00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 ModernShop. Sva prava pridržana.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

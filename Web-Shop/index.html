@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechShop | Početna stranica</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Product Modal */
+        .product-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .product-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .product-modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .product-modal.active .product-modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            z-index: 1;
+        }
+
+        .modal-product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-product-info {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 0 0 12px 12px;
+        }
+
+        /* Hero Overlay Optimization */
+        .hero-overlay {
+            background: linear-gradient(135deg,
+                rgba(0, 0, 0, 0.6) 0%,
+                rgba(0, 0, 0, 0.4) 30%,
+                rgba(0, 0, 0, 0.3) 60%,
+                rgba(0, 0, 0, 0.1) 100%);
+        }
+
+        /* Hero Section Height Optimization */
+        .hero-section {
+            height: 500px;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .product-modal-content {
+            background: #2d2d2d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .modal-product-info {
+            background: rgba(45, 45, 45, 0.95);
+            color: #ffffff;
+        }
+
+        body.dark-mode .modal-close {
+            color: #ffffff;
+        }
+
+        body.dark-mode .loading-overlay {
+            background: rgba(26, 26, 26, 0.9);
+        }
+
+        /* Category Card Improvements */
+        .category-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-card-image {
+            position: relative;
+        }
+
+        .category-card-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.8) 0%,
+                rgba(0, 0, 0, 0.4) 40%,
+                rgba(0, 0, 0, 0.2) 70%,
+                transparent 100%
+            );
+            z-index: 1;
+        }
+
+        .category-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding: 20px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        .category-card-title {
+            color: white !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .category-card-count {
+            color: rgba(255, 255, 255, 0.9) !important;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .category-card-button {
+            background: rgba(255, 255, 255, 0.2) !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .category-card-button:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
+            border-color: rgba(255, 255, 255, 0.6) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Category Grid Layout Fix */
+        .category-grid-featured {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 250px 250px;
+            gap: 20px;
+            height: 520px;
+        }
+
+        .category-grid-featured .category-card:first-child {
+            grid-row: 1 / 3;
+            grid-column: 1;
+        }
+
+        .category-grid-featured .category-card:nth-child(2) {
+            grid-row: 1;
+            grid-column: 2;
+        }
+
+        .category-grid-featured .category-card:nth-child(3) {
+            grid-row: 1;
+            grid-column: 3;
+        }
+
+        .category-grid-featured .category-card:nth-child(4) {
+            grid-row: 2;
+            grid-column: 2;
+        }
+
+        .category-grid-featured .category-card:nth-child(5) {
+            grid-row: 2;
+            grid-column: 3;
+        }
+
+        /* Responsive Category Grid */
+        @media (max-width: 768px) {
+            .category-grid-featured {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(5, 200px);
+                height: auto;
+                gap: 15px;
+            }
+
+            .category-grid-featured .category-card:first-child {
+                grid-row: 1;
+                grid-column: 1;
+            }
+
+            .category-grid-featured .category-card:nth-child(2),
+            .category-grid-featured .category-card:nth-child(3),
+            .category-grid-featured .category-card:nth-child(4),
+            .category-grid-featured .category-card:nth-child(5) {
+                grid-row: auto;
+                grid-column: 1;
+            }
+        }
+
+        /* Responsive Hero */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 400px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                height: 350px;
+            }
+
+            .hero-content {
+                padding-left: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header - Enhanced with dark mode toggle and improved navigation -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="img/logo-fin.svg" alt="ModernShop Logo" width="180" height="40">
+            </a>
+
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Početna</a></li>
+                    <li><a href="pages/proizvodi.html">Proizvodi</a></li>
+                    <li><a href="pages/o-nama.html">O nama</a></li>
+                    <li><a href="pages/kontakt.html">Kontakt</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <form class="search-form">
+                    <input type="search" placeholder="Pretraži...">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+
+                <button class="dark-mode-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+
+                <a href="pages/prijava.html" class="header-icon" aria-label="Moj račun">
+                    <i class="fas fa-user"></i>
+                </a>
+
+                <a href="pages/kosarica.html" class="header-icon" aria-label="Košarica">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">3</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section - Enhanced with better content and styling -->
+        <section class="hero-section">
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&h=800" alt="Technology Hero Image">
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-subtitle">Najnovija tehnologija 2024</div>
+                    <h1>Dobrodošli u svijet moderne tehnologije</h1>
+                    <p>Otkrijte našu ekskluzivnu kolekciju najnovijih mobitela, tableta, laptopa i tehnoloških gadgeta. Pronađite savršen spoj inovacije, performansi i pristupačnosti.</p>
+                    <div class="hero-buttons">
+                        <a href="pages/proizvodi.html" class="btn btn-primary btn-lg btn-animated">Pregledaj proizvode</a>
+                        <a href="#featured-products" class="btn btn-outline btn-lg">Istaknuti proizvodi</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section class="section" id="featured-products">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Istaknuti proizvodi</h2>
+                </div>
+                <div class="product-grid">
+                    <!-- Product 1 - iPhone 15 Pro -->
+                    <div class="product-card-enhanced" onclick="openProductModal('iphone15pro')">
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="iPhone 15 Pro">
+                            <div class="product-badge badge-sale">-15%</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category-small">MOBITELI</div>
+                            <h3 class="product-title">iPhone 15 Pro 128GB</h3>
+                            <div class="product-price-container">
+                                <span class="current-price">1.199,99 €</span>
+                                <span class="old-price">1.399,99 €</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('iphone15pro')">Dodaj u košaricu</button>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 - Samsung Galaxy S24 -->
+                    <div class="product-card-enhanced" onclick="openProductModal('galaxys24')">
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Samsung Galaxy S24">
+                            <div class="product-badge badge-new">NOVO</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category-small">MOBITELI</div>
+                            <h3 class="product-title">Samsung Galaxy S24 256GB</h3>
+                            <div class="product-price-container">
+                                <span class="current-price">899,99 €</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('galaxys24')">Dodaj u košaricu</button>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 - MacBook Air M3 -->
+                    <div class="product-card-enhanced" onclick="openProductModal('macbookair')">
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="MacBook Air M3">
+                            <div class="product-badge badge-sale">-10%</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category-small">LAPTOPI</div>
+                            <h3 class="product-title">MacBook Air M3 13" 256GB</h3>
+                            <div class="product-price-container">
+                                <span class="current-price">1.349,99 €</span>
+                                <span class="old-price">1.499,99 €</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('macbookair')">Dodaj u košaricu</button>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 - iPad Pro -->
+                    <div class="product-card-enhanced" onclick="openProductModal('ipadpro')">
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="iPad Pro">
+                            <div class="product-badge badge-bestseller">BESTSELLER</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category-small">TABLETI</div>
+                            <h3 class="product-title">iPad Pro 11" M4 256GB</h3>
+                            <div class="product-price-container">
+                                <span class="current-price">1.099,99 €</span>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('ipadpro')">Dodaj u košaricu</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <a href="pages/proizvodi.html" class="btn btn-outline btn-lg btn-icon"><i class="fas fa-th-large"></i> Pregledaj sve proizvode</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section - Enhanced with better layout and styling -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Istražite naše kategorije</h2>
+                    <p class="section-subtitle">Pronađite savršene tehnološke proizvode u našim specijaliziranim kategorijama</p>
+                </div>
+                <div class="category-grid-featured">
+                    <!-- Category 1 - Mobiteli (Featured) -->
+                    <div class="category-card" onclick="goToProductsWithCategory('mobiteli')">
+                        <div class="category-card-image">
+                            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800" alt="Mobiteli">
+                        </div>
+                        <div class="category-card-content">
+                            <h3 class="category-card-title">Mobiteli</h3>
+                            <div class="category-card-count">22 proizvoda</div>
+                            <button class="category-card-button" onclick="event.stopPropagation(); goToProductsWithCategory('mobiteli')">Pregledaj</button>
+                        </div>
+                    </div>
+
+                    <!-- Category 2 - Laptopi -->
+                    <div class="category-card" onclick="goToProductsWithCategory('laptopi')">
+                        <div class="category-card-image">
+                            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Laptopi">
+                        </div>
+                        <div class="category-card-content">
+                            <h3 class="category-card-title">Laptopi</h3>
+                            <div class="category-card-count">14 proizvoda</div>
+                            <button class="category-card-button" onclick="event.stopPropagation(); goToProductsWithCategory('laptopi')">Pregledaj</button>
+                        </div>
+                    </div>
+
+                    <!-- Category 3 - Tableti -->
+                    <div class="category-card" onclick="goToProductsWithCategory('tableti')">
+                        <div class="category-card-image">
+                            <img src="https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Tableti">
+                        </div>
+                        <div class="category-card-content">
+                            <h3 class="category-card-title">Tableti</h3>
+                            <div class="category-card-count">22 proizvoda</div>
+                            <button class="category-card-button" onclick="event.stopPropagation(); goToProductsWithCategory('tableti')">Pregledaj</button>
+                        </div>
+                    </div>
+
+                    <!-- Category 4 - Gaming -->
+                    <div class="category-card" onclick="goToProductsWithCategory('gaming')">
+                        <div class="category-card-image">
+                            <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Gaming">
+                        </div>
+                        <div class="category-card-content">
+                            <h3 class="category-card-title">Gaming</h3>
+                            <div class="category-card-count">10 proizvoda</div>
+                            <button class="category-card-button" onclick="event.stopPropagation(); goToProductsWithCategory('gaming')">Pregledaj</button>
+                        </div>
+                    </div>
+
+                    <!-- Category 5 - Dodaci -->
+                    <div class="category-card" onclick="goToProductsWithCategory('dodaci')">
+                        <div class="category-card-image">
+                            <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400" alt="Dodaci">
+                        </div>
+                        <div class="category-card-content">
+                            <h3 class="category-card-title">Dodaci</h3>
+                            <div class="category-card-count">20 proizvoda</div>
+                            <button class="category-card-button" onclick="event.stopPropagation(); goToProductsWithCategory('dodaci')">Pregledaj</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promotional Banner - Enhanced with better styling and content -->
+        <section class="section">
+            <div class="container">
+                <div class="banner">
+                    <div class="banner-image">
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&h=500" alt="Technology Sale Banner">
+                    </div>
+                    <div class="banner-content">
+                        <h2 class="banner-title">Black Friday Tech Sale</h2>
+                        <p class="banner-text">Iskoristite nevjerojatnih 25% popusta na sve tehnološke proizvode! Najnoviji mobiteli, laptopi i tableti po najboljim cijenama. Ograničena ponuda!</p>
+                        <a href="pages/proizvodi.html" class="btn btn-accent btn-lg btn-icon"><i class="fas fa-tag"></i> Iskoristi popust</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section - Enhanced with better styling and animations -->
+        <section class="section" style="background-color: var(--gray-100); padding: var(--spacing-2xl) 0; border-radius: var(--border-radius-lg); margin: var(--spacing-2xl) 0;">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Zašto odabrati nas?</h2>
+                    <p class="section-subtitle">Otkrijte prednosti kupovine u našoj trgovini</p>
+                </div>
+                <div class="features-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-xl); text-align: center;">
+                    <div class="feature" style="background-color: white; padding: var(--spacing-lg); border-radius: var(--border-radius-md); box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)';">
+                        <div style="width: 80px; height: 80px; background-color: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md);">
+                            <i class="fas fa-truck" style="font-size: 2.5rem; color: white;"></i>
+                        </div>
+                        <h3 style="margin-bottom: var(--spacing-sm); color: var(--gray-900);">Besplatna dostava</h3>
+                        <p style="color: var(--gray-700);">Za sve narudžbe iznad 50 €</p>
+                    </div>
+                    <div class="feature" style="background-color: white; padding: var(--spacing-lg); border-radius: var(--border-radius-md); box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)';">
+                        <div style="width: 80px; height: 80px; background-color: var(--secondary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md);">
+                            <i class="fas fa-undo" style="font-size: 2.5rem; color: white;"></i>
+                        </div>
+                        <h3 style="margin-bottom: var(--spacing-sm); color: var(--gray-900);">Povrat novca</h3>
+                        <p style="color: var(--gray-700);">30 dana garancija povrata</p>
+                    </div>
+                    <div class="feature" style="background-color: white; padding: var(--spacing-lg); border-radius: var(--border-radius-md); box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)';">
+                        <div style="width: 80px; height: 80px; background-color: var(--accent-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md);">
+                            <i class="fas fa-headset" style="font-size: 2.5rem; color: white;"></i>
+                        </div>
+                        <h3 style="margin-bottom: var(--spacing-sm); color: var(--gray-900);">Podrška 24/7</h3>
+                        <p style="color: var(--gray-700);">Dostupni smo u bilo koje vrijeme</p>
+                    </div>
+                    <div class="feature" style="background-color: white; padding: var(--spacing-lg); border-radius: var(--border-radius-md); box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-md)';">
+                        <div style="width: 80px; height: 80px; background-color: var(--primary-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md);">
+                            <i class="fas fa-lock" style="font-size: 2.5rem; color: white;"></i>
+                        </div>
+                        <h3 style="margin-bottom: var(--spacing-sm); color: var(--gray-900);">Sigurno plaćanje</h3>
+                        <p style="color: var(--gray-700);">100% sigurna transakcija</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer - Enhanced with better styling and content -->
+    <footer class="site-footer">
+        <div class="container">
+            <!-- Newsletter Section -->
+            <div class="footer-newsletter" style="background-color: var(--primary-dark); padding: var(--spacing-lg); border-radius: var(--border-radius-md); margin-bottom: var(--spacing-xl); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+                <div style="flex: 1; min-width: 250px; margin-bottom: var(--spacing-md);">
+                    <h3 style="color: white; margin-bottom: var(--spacing-sm);">Pretplatite se na naš newsletter</h3>
+                    <p style="color: var(--gray-300); margin-bottom: 0;">Budite prvi koji će saznati o novim proizvodima i posebnim ponudama</p>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <form style="display: flex;">
+                        <input type="email" placeholder="Vaša email adresa" style="flex: 1; padding: var(--spacing-md); border: none; border-radius: var(--border-radius-md) 0 0 var(--border-radius-md); font-size: var(--font-size-md);">
+                        <button type="submit" class="btn" style="background-color: var(--accent-color); color: var(--dark-color); border: none; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: var(--spacing-md); font-weight: var(--font-weight-bold);">Pretplati se</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h4>O nama</h4>
+                    <p>TechShop je vodeći online trgovac najnovije tehnologije s dugogodišnjim iskustvom u pružanju vrhunskih tehnoloških proizvoda po konkurentnim cijenama.</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Korisni linkovi</h4>
+                    <ul>
+                        <li><a href="pages/o-nama.html">O nama</a></li>
+                        <li><a href="pages/faq.html">Česta pitanja</a></li>
+                        <li><a href="pages/uvjeti-koristenja.html">Uvjeti korištenja</a></li>
+                        <li><a href="pages/politika-privatnosti.html">Politika privatnosti</a></li>
+                        <li><a href="pages/kontakt.html">Kontaktirajte nas</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Kategorije</h4>
+                    <ul>
+                        <li><a href="pages/proizvodi.html?category=mobiteli">Mobiteli (22)</a></li>
+                        <li><a href="pages/proizvodi.html?category=laptopi">Laptopi (14)</a></li>
+                        <li><a href="pages/proizvodi.html?category=tableti">Tableti (10)</a></li>
+                        <li><a href="pages/proizvodi.html?category=gaming">Gaming (6)</a></li>
+                        <li><a href="pages/proizvodi.html?category=dodaci">Dodaci (20)</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Kontakt</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Ilica 242, 10000 Zagreb</li>
+                        <li><i class="fas fa-phone"></i> +385 1 555 0123</li>
+                        <li><i class="fas fa-envelope"></i> info@techshop.hr</li>
+                        <li><i class="fas fa-clock"></i> Pon - Pet: 9:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding-top: var(--spacing-md); border-top: 1px solid var(--gray-700);">
+                    <p>&copy; 2024 TechShop. Sva prava pridržana.</p>
+                    <div style="display: flex; gap: var(--spacing-md);">
+                        <img src="https://via.placeholder.com/40x25?text=VISA" alt="Visa" style="height: 25px;">
+                        <img src="https://via.placeholder.com/40x25?text=MC" alt="MasterCard" style="height: 25px;">
+                        <img src="https://via.placeholder.com/40x25?text=AMEX" alt="American Express" style="height: 25px;">
+                        <img src="https://via.placeholder.com/40x25?text=PayPal" alt="PayPal" style="height: 25px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <a href="#" id="back-to-top" style="position: fixed; bottom: 20px; right: 20px; width: 40px; height: 40px; background-color: var(--primary-color); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 1000;" onmouseover="this.style.backgroundColor='var(--primary-dark)';" onmouseout="this.style.backgroundColor='var(--primary-color)';">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-content">
+            <button class="modal-close" onclick="closeProductModal()">&times;</button>
+            <img class="modal-product-image" id="modalProductImage" src="" alt="">
+            <div class="modal-product-info">
+                <div class="product-card-category" id="modalProductCategory"></div>
+                <h3 id="modalProductTitle"></h3>
+                <div class="product-card-price">
+                    <span class="current-price" id="modalCurrentPrice"></span>
+                    <span class="old-price" id="modalOldPrice"></span>
+                </div>
+                <p id="modalProductDescription"></p>
+                <button class="btn btn-primary btn-lg" id="modalAddToCartBtn">Dodaj u košaricu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced JavaScript -->
+    <script>
+        // Product data
+        const products = {
+            'iphone15pro': {
+                title: 'iPhone 15 Pro 128GB',
+                category: 'MOBITELI',
+                currentPrice: '1.199,99 €',
+                oldPrice: '1.399,99 €',
+                image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400',
+                description: 'Najnoviji iPhone 15 Pro s A17 Pro čipom, titanijskim kućištem i naprednim kamerama. Dostupan u različitim bojama s 128GB prostora za pohranu.'
+            },
+            'galaxys24': {
+                title: 'Samsung Galaxy S24 256GB',
+                category: 'MOBITELI',
+                currentPrice: '899,99 €',
+                oldPrice: '',
+                image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400',
+                description: 'Samsung Galaxy S24 s najnovijim Snapdragon procesorom, odličnim kamerama i 256GB prostora. Idealan za fotografiju i gaming.'
+            },
+            'macbookair': {
+                title: 'MacBook Air M3 13" 256GB',
+                category: 'LAPTOPI',
+                currentPrice: '1.349,99 €',
+                oldPrice: '1.499,99 €',
+                image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400',
+                description: 'MacBook Air s M3 čipom pruža nevjerojatnu performansu i bateriju koja traje cijeli dan. Savršen za rad i kreativnost.'
+            },
+            'ipadpro': {
+                title: 'iPad Pro 11" M4 256GB',
+                category: 'TABLETI',
+                currentPrice: '1.099,99 €',
+                oldPrice: '',
+                image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400',
+                description: 'iPad Pro s M4 čipom i Liquid Retina displayom. Idealan za profesionalce i kreativce koji trebaju moćan tablet.'
+            }
+        };
+
+        // Cart functionality
+        let cart = JSON.parse(sessionStorage.getItem('techshop_cart')) || [];
+
+        function updateCartCount() {
+            const cartCount = document.querySelector('.cart-count');
+            if (cartCount) {
+                cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+            }
+        }
+
+        function addToCart(productId) {
+            showLoading();
+
+            setTimeout(() => {
+                const product = products[productId];
+                if (product) {
+                    const existingItem = cart.find(item => item.id === productId);
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id: productId,
+                            title: product.title,
+                            price: product.currentPrice,
+                            quantity: 1
+                        });
+                    }
+                    sessionStorage.setItem('techshop_cart', JSON.stringify(cart));
+                    updateCartCount();
+
+                    // Show success message
+                    alert('Proizvod je dodan u košaricu!');
+                }
+                hideLoading();
+            }, 800);
+        }
+
+        function openProductModal(productId) {
+            const product = products[productId];
+            if (product) {
+                document.getElementById('modalProductImage').src = product.image;
+                document.getElementById('modalProductCategory').textContent = product.category;
+                document.getElementById('modalProductTitle').textContent = product.title;
+                document.getElementById('modalCurrentPrice').textContent = product.currentPrice;
+                document.getElementById('modalOldPrice').textContent = product.oldPrice;
+                document.getElementById('modalOldPrice').style.display = product.oldPrice ? 'inline' : 'none';
+                document.getElementById('modalProductDescription').textContent = product.description;
+
+                const addToCartBtn = document.getElementById('modalAddToCartBtn');
+                addToCartBtn.onclick = () => {
+                    addToCart(productId);
+                    closeProductModal();
+                };
+
+                document.getElementById('productModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').classList.add('active');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.remove('active');
+        }
+
+        // Search functionality
+        function performSearch() {
+            const searchInput = document.querySelector('.search-form input');
+            const searchTerm = searchInput.value.trim();
+
+            if (searchTerm) {
+                showLoading();
+                setTimeout(() => {
+                    window.location.href = `pages/proizvodi.html?search=${encodeURIComponent(searchTerm)}`;
+                }, 500);
+            }
+        }
+
+        // Navigate to products page with category filter
+        function goToProductsWithCategory(category) {
+            showLoading();
+            setTimeout(() => {
+                window.location.href = `pages/proizvodi.html?category=${category}`;
+            }, 300);
+        }
+
+        // Show back to top button when scrolling down
+        window.onscroll = function() {
+            var backToTopButton = document.getElementById('back-to-top');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopButton.style.opacity = '1';
+                backToTopButton.style.visibility = 'visible';
+            } else {
+                backToTopButton.style.opacity = '0';
+                backToTopButton.style.visibility = 'hidden';
+            }
+        };
+
+        // Dark mode toggle functionality
+        document.querySelector('.dark-mode-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+
+            // Save dark mode preference
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+
+            // Change icon based on mode
+            var icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // Search form functionality
+        document.querySelector('.search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            performSearch();
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('productModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProductModal();
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load dark mode preference
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                const icon = document.querySelector('.dark-mode-toggle i');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+
+            // Update cart count
+            updateCartCount();
+
+            // Add loading animation to buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!this.classList.contains('product-card-button')) {
+                        showLoading();
+                        setTimeout(hideLoading, 300);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
