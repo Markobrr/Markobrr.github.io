@@ -214,6 +214,11 @@
             border-top: 1px solid var(--gray-300);
         }
 
+        .order-summary-discount .order-summary-value {
+            color: var(--success-color);
+            font-weight: var(--font-weight-medium);
+        }
+
         .order-button {
             width: 100%;
             margin-top: var(--spacing-lg);
@@ -495,8 +500,8 @@
                             <div class="order-summary-value">409,96 €</div>
                         </div>
 
-                        <div class="order-summary-row">
-                            <div class="order-summary-label">Popust</div>
+                        <div class="order-summary-row order-summary-discount">
+                            <div class="order-summary-label">Popust (20%)</div>
                             <div class="order-summary-value">0,00 €</div>
                         </div>
 
@@ -572,5 +577,86 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Discount functionality for checkout page
+        const DISCOUNT_PERCENTAGE = 0.20;
+        let discountApplied = sessionStorage.getItem('discountApplied') === 'true';
+
+        function calculateOrderSummary() {
+            // Get cart from sessionStorage
+            const cart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+
+            // Calculate subtotal (this is a simplified calculation)
+            let subtotal = 0;
+            cart.forEach(item => {
+                // Simplified price calculation - in real app you'd get prices from database
+                const price = getProductPrice(item.id);
+                subtotal += price * item.quantity;
+            });
+
+            // Calculate shipping
+            const shipping = subtotal > 50 ? 0 : 5.99;
+
+            // Calculate discount
+            let discountAmount = 0;
+            if (discountApplied) {
+                discountAmount = subtotal * DISCOUNT_PERCENTAGE;
+            }
+
+            // Calculate total
+            const total = subtotal - discountAmount + shipping;
+
+            // Update display
+            updateOrderSummaryDisplay(subtotal, discountAmount, shipping, total);
+        }
+
+        function getProductPrice(productId) {
+            // Simplified price lookup - in real app this would come from database
+            const prices = {
+                'iphone15pro': 1199.99,
+                'galaxys24': 899.99,
+                'macbookair': 1349.99,
+                'ipadpro': 1099.99
+            };
+            return prices[productId] || 99.99;
+        }
+
+        function updateOrderSummaryDisplay(subtotal, discountAmount, shipping, total) {
+            // Update subtotal
+            document.querySelector('.order-summary-row:nth-child(1) .order-summary-value').textContent =
+                formatPrice(subtotal);
+
+            // Update discount
+            const discountRow = document.querySelector('.order-summary-row:nth-child(2)');
+            if (discountApplied && discountAmount > 0) {
+                discountRow.querySelector('.order-summary-value').textContent = '-' + formatPrice(discountAmount);
+                discountRow.style.color = '#28a745';
+            } else {
+                discountRow.querySelector('.order-summary-value').textContent = '0,00 €';
+                discountRow.style.color = '';
+            }
+
+            // Update shipping
+            document.querySelector('.order-summary-row:nth-child(3) .order-summary-value').textContent =
+                shipping === 0 ? 'Besplatno' : formatPrice(shipping);
+
+            // Update total
+            document.querySelector('.order-summary-total .order-summary-value').textContent =
+                formatPrice(total);
+        }
+
+        function formatPrice(price) {
+            return price.toLocaleString('hr-HR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + ' €';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateOrderSummary();
+        });
+    </script>
 </body>
 </html>

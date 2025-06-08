@@ -317,6 +317,24 @@ function setupEventListeners() {
     if (searchInput) {
         searchInput.addEventListener('input', debounce(applyFilters, 500));
     }
+
+    // Mobile menu functionality
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', function() {
+            const nav = document.querySelector('.main-nav');
+            nav.classList.toggle('active');
+
+            const icon = this.querySelector('i');
+            if (nav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
 }
 
 // Utility function for debouncing
@@ -351,6 +369,38 @@ function updateCartCount() {
     }
 }
 
+// Toast notification function
+function showToast(message, type = 'success') {
+    // Remove existing toast if any
+    const existingToast = document.querySelector('.toast');
+    if (existingToast) {
+        existingToast.remove();
+    }
+
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+
+    // Add to body
+    document.body.appendChild(toast);
+
+    // Show toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    // Hide and remove toast after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentNode) {
+                toast.remove();
+            }
+        }, 300);
+    }, 3000);
+}
+
 function addToCart(productId) {
     showLoading();
 
@@ -363,9 +413,6 @@ function addToCart(productId) {
             } else {
                 cart.push({
                     id: productId,
-                    title: product.title,
-                    price: product.currentPrice,
-                    image: product.image,
                     quantity: 1
                 });
             }
@@ -373,7 +420,7 @@ function addToCart(productId) {
             updateCartCount();
 
             // Show success message
-            alert('Proizvod je dodan u košaricu!');
+            showToast('Proizvod je dodan u košaricu!', 'success');
         }
         hideLoading();
     }, 500);

@@ -912,6 +912,10 @@ textarea.form-control {
 
 .product-info {
   padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
 }
 
 .product-category-small {
@@ -950,20 +954,120 @@ textarea.form-control {
 }
 
 .add-to-cart-btn {
-  width: 100%;
-  padding: var(--spacing-md);
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: var(--border-radius-md);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  width: 100% !important;
+  padding: var(--spacing-md) !important;
+  background: var(--primary-color) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: var(--border-radius-md) !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  margin-top: auto !important;
+  font-size: 0.95rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  position: relative !important;
+  z-index: 100 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .add-to-cart-btn:hover {
   background: var(--primary-dark);
   transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.add-to-cart-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced button visibility */
+.product-card-enhanced .add-to-cart-btn {
+  position: relative !important;
+  z-index: 999 !important;
+  pointer-events: auto !important;
+  min-height: 44px !important;
+  line-height: 1.2 !important;
+}
+
+.product-info {
+  position: relative;
+  z-index: 10;
+}
+
+/* Ensure buttons are always visible on mobile */
+@media (max-width: 768px) {
+  .add-to-cart-btn {
+    font-size: 0.9rem !important;
+    padding: 12px 16px !important;
+    min-height: 48px !important;
+    touch-action: manipulation !important;
+  }
+
+  .product-card-enhanced {
+    position: relative;
+  }
+
+  .product-info {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(5px);
+  }
+}
+
+@media (max-width: 480px) {
+  .add-to-cart-btn {
+    font-size: 0.85rem !important;
+    padding: 14px 18px !important;
+    min-height: 50px !important;
+  }
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--primary-color);
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transform: translateX(400px);
+  transition: transform 0.3s ease;
+  font-weight: 500;
+}
+
+.toast.show {
+  transform: translateX(0);
+}
+
+.toast.success {
+  background: #28a745;
+}
+
+.toast.error {
+  background: #dc3545;
+}
+
+.cart-remove-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cart-remove-btn:hover {
+  background: #c82333;
+  transform: scale(1.1);
 }
 
 /* Dark Mode for Enhanced Cards */

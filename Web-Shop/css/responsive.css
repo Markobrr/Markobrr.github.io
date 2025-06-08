@@ -106,10 +106,40 @@
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  /* Enhanced button visibility for tablets */
+  .add-to-cart-btn {
+    min-height: 44px !important;
+    font-size: 0.9rem !important;
+    padding: 12px var(--spacing-md) !important;
+    position: relative !important;
+    z-index: 999 !important;
+  }
   
+  .cart-container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
   .cart-table {
     display: block;
     overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .cart-table th,
+  .cart-table td {
+    min-width: 120px;
+    padding: var(--spacing-sm);
+  }
+
+  .cart-product {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cart-product-image {
+    margin-bottom: var(--spacing-sm);
   }
   
   .checkout-form {
@@ -158,6 +188,32 @@
   
   .product-grid {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .product-card-enhanced {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .product-info {
+    padding: var(--spacing-md);
+  }
+
+  .add-to-cart-btn {
+    padding: 14px var(--spacing-md) !important;
+    font-size: var(--font-size-sm) !important;
+    min-height: 48px !important;
+    position: relative !important;
+    z-index: 1000 !important;
+    background: var(--primary-color) !important;
+    border: 2px solid var(--primary-color) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .product-card-enhanced:hover .add-to-cart-btn {
+    background: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+    transform: translateY(-2px) !important;
   }
   
   .hero-content h1 {
@@ -178,6 +234,34 @@
   
   .related-products {
     grid-template-columns: 1fr;
+  }
+
+  .cart-table {
+    font-size: var(--font-size-sm);
+  }
+
+  .cart-quantity {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .cart-quantity-btn,
+  .cart-quantity-input {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .cart-summary {
+    padding: var(--spacing-md);
+  }
+
+  .cart-summary-buttons {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .cart-summary-buttons .btn {
+    width: 100%;
   }
 }
 
