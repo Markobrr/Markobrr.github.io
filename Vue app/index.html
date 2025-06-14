@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeoGears - Moderna Tehnologija</title>
+    <meta name="description" content="Najbolji izbor mobitela, laptopa, tableta i gaming opreme. Moderna tehnologija po pristupačnim cijenama.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Vue Router -->
+    <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.js"></script>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./styles/main.css">
+
+    <style>
+        /* Products Page Styles */
+        .products-content {
+            display: flex;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .filters-sidebar {
+            width: 280px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-filter-toggle {
+            display: none;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .close-filters {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .filter-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #333;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.25rem 0;
+        }
+
+        .products-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        .product-info {
+            padding-top: 1rem;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-brand {
+            color: #666;
+            margin-bottom: 0.75rem;
+        }
+
+        .product-price {
+            margin-bottom: 1rem;
+        }
+
+        .current-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #007bff;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            margin-left: 0.5rem;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Mobile Menu Toggle - Hide on Desktop */
+        .mobile-menu-toggle {
+            display: none;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .products-content {
+                flex-direction: column;
+            }
+
+            .mobile-filter-toggle {
+                display: flex;
+            }
+
+            .filters-sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                z-index: 1000;
+                transform: translateX(-100%);
+                overflow-y: auto;
+            }
+
+            .filters-sidebar.show {
+                transform: translateX(0);
+            }
+
+            .close-filters {
+                display: block;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+        }
+
+        /* Dark Mode Styles */
+        :root.dark-mode {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --border-color: #404040;
+        }
+
+        :root.dark-mode body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        :root.dark-mode .products-page {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        :root.dark-mode .filters-sidebar {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        :root.dark-mode .filter-title {
+            color: var(--text-primary);
+        }
+
+        :root.dark-mode .filter-option {
+            color: var(--text-secondary);
+        }
+
+        :root.dark-mode .product-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        :root.dark-mode .product-title {
+            color: var(--text-primary);
+        }
+
+        :root.dark-mode .product-brand {
+            color: var(--text-secondary);
+        }
+
+        :root.dark-mode .search-input {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        :root.dark-mode .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        :root.dark-mode .sort-select {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        :root.dark-mode .page-header {
+            color: var(--text-primary);
+        }
+
+        :root.dark-mode .page-title {
+            color: var(--text-primary);
+        }
+
+        :root.dark-mode .page-subtitle {
+            color: var(--text-secondary);
+        }
+
+        :root.dark-mode .products-count {
+            color: var(--text-secondary);
+        }
+
+        /* Mobile Responsive Styles for Cart */
+        @media (max-width: 768px) {
+            .cart-page {
+                padding: 1rem 0.5rem;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .cart-item-image {
+                width: 100%;
+                max-width: 150px;
+                align-self: center;
+            }
+
+            .cart-item-details {
+                width: 100%;
+                text-align: center;
+            }
+
+            .cart-item-title {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .cart-item-brand {
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .cart-item-price {
+                font-size: 1.2rem;
+                font-weight: bold;
+                margin-bottom: 1rem;
+            }
+
+            .quantity-controls {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+
+            .quantity-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .quantity-display {
+                min-width: 60px;
+                font-size: 1.1rem;
+                padding: 0.5rem;
+            }
+
+            .remove-btn {
+                align-self: center;
+                width: 100%;
+                max-width: 200px;
+                padding: 0.75rem;
+                font-size: 1rem;
+            }
+
+            .cart-summary {
+                position: static;
+                width: 100%;
+                margin-top: 2rem;
+                padding: 1.5rem;
+            }
+
+            .summary-title {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+
+            .summary-row {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .summary-total {
+                font-size: 1.4rem;
+                padding: 1rem 0;
+            }
+
+            .checkout-btn {
+                width: 100%;
+                padding: 1rem;
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+
+            .clear-cart-btn {
+                width: 100%;
+                padding: 0.75rem;
+                font-size: 1rem;
+            }
+
+            .empty-cart {
+                padding: 2rem 1rem;
+                text-align: center;
+            }
+
+            .empty-cart h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .empty-cart p {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .continue-shopping-btn {
+                width: 100%;
+                max-width: 250px;
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .cart-page {
+                padding: 0.5rem 0.25rem;
+            }
+
+            .cart-item {
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .cart-item-title {
+                font-size: 1rem;
+            }
+
+            .cart-item-price {
+                font-size: 1.1rem;
+            }
+
+            .quantity-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .quantity-display {
+                min-width: 50px;
+                font-size: 1rem;
+                padding: 0.4rem;
+            }
+
+            .cart-summary {
+                padding: 1rem;
+            }
+
+            .summary-title {
+                font-size: 1.2rem;
+            }
+
+            .summary-total {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Toast Notifications Styles */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 400px;
+        }
+
+        .toast {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            margin-bottom: 10px;
+            padding: 16px;
+            min-width: 300px;
+            border-left: 4px solid #007bff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toast:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .toast-success {
+            border-left-color: #28a745;
+        }
+
+        .toast-error {
+            border-left-color: #dc3545;
+        }
+
+        .toast-warning {
+            border-left-color: #ffc107;
+        }
+
+        .toast-info {
+            border-left-color: #17a2b8;
+        }
+
+        .toast-icon {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .toast-success .toast-icon {
+            color: #28a745;
+        }
+
+        .toast-error .toast-icon {
+            color: #dc3545;
+        }
+
+        .toast-warning .toast-icon {
+            color: #ffc107;
+        }
+
+        .toast-info .toast-icon {
+            color: #17a2b8;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .toast-message {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 12px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toast-close:hover {
+            color: #666;
+        }
+
+        /* Toast animations */
+        .toast-enter-active,
+        .toast-leave-active {
+            transition: all 0.3s ease;
+        }
+
+        .toast-enter-from {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        .toast-leave-to {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        /* Dark mode toast styles */
+        :root.dark-mode .toast {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        :root.dark-mode .toast-message {
+            color: var(--text-secondary);
+        }
+
+        :root.dark-mode .toast-close {
+            color: var(--text-secondary);
+        }
+
+        :root.dark-mode .toast-close:hover {
+            color: var(--text-primary);
+        }
+
+        /* Mobile toast styles */
+        @media (max-width: 768px) {
+            .toast-container {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+
+            .toast {
+                min-width: auto;
+                width: 100%;
+                padding: 12px;
+            }
+
+            .toast-icon {
+                font-size: 18px;
+                margin-right: 10px;
+            }
+
+            .toast-title {
+                font-size: 13px;
+            }
+
+            .toast-message {
+                font-size: 12px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <div id="app">
+        <!-- Vue app će se učitati ovdje -->
+    </div>
+
+    <!-- Load products data first -->
+    <script src="./js/products.js"></script>
+
+
+
+
+
+    <!-- Initialize Dark Mode Early -->
+    <script>
+        // Initialize dark mode before app loads to prevent flash
+        (function() {
+            const saved = localStorage.getItem('theme-preference');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const shouldUseDark = saved ? saved === 'dark' : systemPrefersDark;
+
+            if (shouldUseDark) {
+                document.documentElement.classList.add('dark-mode');
+                document.documentElement.classList.remove('light-mode');
+            } else {
+                document.documentElement.classList.add('light-mode');
+                document.documentElement.classList.remove('dark-mode');
+            }
+        })();
+    </script>
+
+    <!-- Initialize App -->
+    <script>
+        console.log('Starting NeoGears app...');
+
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+
+        // If DOM is already loaded
+        if (document.readyState === 'loading') {
+            // Do nothing, wait for DOMContentLoaded
+        } else {
+            // DOM is already loaded
+            initializeApp();
+        }
+
+        // Helper function to load scripts dynamically
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                // Check if script is already loaded
+                const existingScript = document.querySelector(`script[src="${src}"]`);
+                if (existingScript) {
+                    console.log(`⚡ Already loaded: ${src}`);
+                    resolve();
+                    return;
+                }
+
+                // Only log critical files
+                if (src.includes('views/') || src.includes('SimpleRouter.js')) {
+                    console.log(`📥 Loading: ${src}`);
+                }
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = () => {
+                    if (src.includes('views/') || src.includes('SimpleRouter.js')) {
+                        console.log(`✅ Loaded: ${src}`);
+                    }
+                    resolve();
+                };
+                script.onerror = (error) => {
+                    console.error(`❌ Failed to load: ${src}`, error);
+                    reject(error);
+                };
+                document.head.appendChild(script);
+            });
+        }
+
+        function loadScripts(scripts) {
+            return Promise.all(scripts.map(loadScript));
+        }
+
+        async function initializeApp() {
+            console.log('🚀 Starting NeoGears app initialization...');
+
+            // Check if libraries are loaded
+            if (typeof Vue === 'undefined') {
+                console.error('❌ Vue is not loaded!');
+                document.getElementById('app').innerHTML = '<div style="padding: 2rem; text-align: center; color: red;"><h2>Greška: Vue nije učitan</h2></div>';
+                return;
+            }
+            console.log('✅ Vue loaded successfully');
+
+            if (typeof VueRouter === 'undefined') {
+                console.error('❌ VueRouter is not loaded!');
+                document.getElementById('app').innerHTML = '<div style="padding: 2rem; text-align: center; color: red;"><h2>Greška: VueRouter nije učitan</h2></div>';
+                return;
+            }
+            console.log('✅ VueRouter loaded successfully');
+
+            // Check if products are loaded
+            if (typeof getAllProducts !== 'function') {
+                console.warn('⚠️ Products not loaded yet, but continuing...');
+            } else {
+                console.log('✅ Products loaded successfully');
+            }
+
+            try {
+                console.log('📦 Loading components...');
+
+                const { createApp } = Vue;
+
+                // Create simple inline stores instead of loading external ones
+                console.log('🛒 Creating cart store...');
+                window.cartStore = Vue.reactive({
+                    items: [],
+                    addItem(product) {
+                        const existingItem = this.items.find(item => item.id === product.id);
+                        if (existingItem) {
+                            existingItem.quantity += 1;
+                        } else {
+                            this.items.push({ ...product, quantity: 1 });
+                        }
+                        this.saveToStorage();
+                        console.log('Added to cart:', product.title);
+                    },
+                    removeItem(productId) {
+                        this.items = this.items.filter(item => item.id !== productId);
+                        this.saveToStorage();
+                    },
+                    updateQuantity(productId, quantity) {
+                        const item = this.items.find(item => item.id === productId);
+                        if (item) {
+                            item.quantity = quantity;
+                            if (quantity <= 0) {
+                                this.removeItem(productId);
+                            } else {
+                                this.saveToStorage();
+                            }
+                        }
+                    },
+                    get totalItems() {
+                        return this.items.reduce((total, item) => total + item.quantity, 0);
+                    },
+                    get totalPrice() {
+                        return this.items.reduce((total, item) => {
+                            const price = parseFloat(item.currentPrice.replace(/[^\d,]/g, '').replace(',', '.'));
+                            return total + (price * item.quantity);
+                        }, 0);
+                    },
+                    saveToStorage() {
+                        localStorage.setItem('cart', JSON.stringify(this.items));
+                    },
+                    loadFromStorage() {
+                        const saved = localStorage.getItem('cart');
+                        if (saved) {
+                            this.items = JSON.parse(saved);
+                        }
+                    }
+                });
+
+                // Load cart from storage
+                window.cartStore.loadFromStorage();
+                console.log('✅ Cart store created and loaded from storage');
+
+                // Toast system will be created by ToastNotifications component
+                console.log('🍞 Toast system will be initialized by component...');
+
+                // Create basic stores if they don't exist
+                console.log('🏪 Creating basic stores...');
+                if (!window.wishlistStore) {
+                    window.wishlistStore = {
+                        items: new Set(),
+                        addItem: (id) => console.log('Wishlist add:', id),
+                        removeItem: (id) => console.log('Wishlist remove:', id),
+                        isFavorite: (id) => false,
+                        getItems: () => [],
+                        getItemsWithDetails: () => []
+                    };
+                }
+
+                if (!window.comparisonStore) {
+                    window.comparisonStore = {
+                        items: [],
+                        addItem: (id) => ({ success: true }),
+                        removeItem: (id) => true,
+                        canAddMore: true,
+                        getItems: () => []
+                    };
+                }
+
+                if (!window.recentlyViewedStore) {
+                    window.recentlyViewedStore = {
+                        items: [],
+                        addItem: (id) => console.log('Recently viewed add:', id),
+                        removeItem: (id) => console.log('Recently viewed remove:', id),
+                        getItemsWithDetails: () => [],
+                        clearAll: () => 0
+                    };
+                }
+                console.log('✅ Basic stores created');
+
+                // Load components in correct order - stores first, then components, then views, then router
+                // Load stores
+                await loadScripts([
+                    './js/stores/WishlistStore.js',
+                    './js/stores/ComparisonStore.js',
+                    './js/stores/RecentlyViewedStore.js'
+                ]);
+
+                // Load basic components
+                await loadScripts([
+                    './js/components/ToastNotifications.js',
+                    './js/components/LoadingSkeleton.js',
+                    './js/components/PriceRangeSlider.js',
+                    './js/components/FilterBadges.js',
+                    './js/components/MobileFiltersModal.js',
+                    './js/components/SwipeableProductCard.js',
+                    './js/components/PullToRefresh.js',
+                    './js/components/InfiniteScroll.js',
+                    './js/components/DarkModeToggle.js',
+                    './js/components/ImageZoom.js',
+                    './js/components/StockIndicator.js',
+                    './js/components/ColorVariants.js',
+                    './js/components/ImageGallery.js'
+                ]);
+
+                // Load advanced components
+                await loadScripts([
+                    './js/components/WishlistManager.js',
+                    './js/components/ProductComparison.js',
+                    './js/components/RecentlyViewed.js',
+                    './js/components/SimpleNavHeader.js',
+                    './js/components/SimpleAppFooter.js'
+                ]);
+
+                // Load views (critical for navigation)
+                console.log('📄 Loading views...');
+                await loadScripts([
+                    './js/views/SimpleHome.js',
+                    './js/views/SimpleProducts.js',
+                    './js/views/SimpleCart.js'
+                ]);
+
+                // Check if views are properly loaded
+                console.log('🔍 View components check:');
+                console.log('- Home component:', typeof Home !== 'undefined' ? '✅' : '❌');
+                console.log('- Products component:', typeof Products !== 'undefined' ? '✅' : '❌');
+                console.log('- Cart component:', typeof Cart !== 'undefined' ? '✅' : '❌');
+
+                // Load router
+                console.log('🛣️ Loading router...');
+                await loadScripts(['./js/SimpleRouter.js']);
+
+                // Check router
+                console.log('🔍 Router check:', typeof window.router !== 'undefined' ? '✅' : '❌');
+                if (window.router && window.router.getRoutes) {
+                    console.log('📋 Router routes:', window.router.getRoutes().map(r => r.path));
+                }
+
+                // Create fallback components for missing ones
+                console.log('🔧 Creating fallback components...');
+
+                // Create fallback components if they don't exist
+                if (typeof PriceRangeSlider === 'undefined') {
+                    window.PriceRangeSlider = {
+                        props: ['min', 'max', 'step', 'modelValue'],
+                        emits: ['update:modelValue', 'change'],
+                        template: '<div class="price-range-fallback">Price Range Slider (Loading...)</div>'
+                    };
+                }
+
+                if (typeof FilterBadges === 'undefined') {
+                    window.FilterBadges = {
+                        props: ['selectedCategories', 'selectedBrands', 'searchQuery', 'priceRange', 'minPrice', 'maxPrice'],
+                        emits: ['removeCategory', 'removeBrand', 'clearSearch', 'resetPrice', 'clearAll'],
+                        template: '<div class="filter-badges-fallback">Filter Badges (Loading...)</div>'
+                    };
+                }
+
+                if (typeof MobileFiltersModal === 'undefined') {
+                    window.MobileFiltersModal = {
+                        props: ['isOpen', 'categories', 'brands', 'selectedCategories', 'selectedBrands', 'priceRange', 'searchQuery'],
+                        emits: ['close', 'update:selectedCategories', 'update:selectedBrands', 'update:priceRange', 'update:searchQuery', 'applyFilters', 'clearFilters'],
+                        template: '<div v-if="isOpen" class="mobile-filters-fallback">Mobile Filters (Loading...)</div>'
+                    };
+                }
+
+                if (typeof SwipeableProductCard === 'undefined') {
+                    window.SwipeableProductCard = {
+                        props: ['product'],
+                        emits: ['addToCart'],
+                        template: '<div class="swipeable-product-card-fallback">Product Card (Loading...)</div>'
+                    };
+                }
+
+                if (typeof PullToRefresh === 'undefined') {
+                    window.PullToRefresh = {
+                        props: ['onRefresh', 'disabled'],
+                        template: '<div class="pull-to-refresh-fallback"><slot></slot></div>'
+                    };
+                }
+
+                if (typeof InfiniteScroll === 'undefined') {
+                    window.InfiniteScroll = {
+                        props: ['items', 'itemsPerPage', 'loading', 'disabled'],
+                        emits: ['loadMore'],
+                        template: '<div class="infinite-scroll-fallback"><slot :visibleItems="items"></slot></div>'
+                    };
+                }
+
+                // Create more fallback components
+                if (typeof ImageZoom === 'undefined') {
+                    window.ImageZoom = {
+                        props: ['src', 'alt'],
+                        template: '<img :src="src" :alt="alt" class="image-zoom-fallback" />'
+                    };
+                }
+
+                if (typeof StockIndicator === 'undefined') {
+                    window.StockIndicator = {
+                        props: ['stock', 'size'],
+                        template: '<div class="stock-indicator-fallback">In Stock</div>'
+                    };
+                }
+
+                if (typeof ColorVariants === 'undefined') {
+                    window.ColorVariants = {
+                        props: ['colors', 'selectedColor'],
+                        emits: ['update:selectedColor'],
+                        template: '<div class="color-variants-fallback">Color Options</div>'
+                    };
+                }
+
+                if (typeof ImageGallery === 'undefined') {
+                    window.ImageGallery = {
+                        props: ['images', 'autoPlay'],
+                        template: '<div class="image-gallery-fallback">Image Gallery</div>'
+                    };
+                }
+
+                if (typeof WishlistManager === 'undefined') {
+                    window.WishlistManager = {
+                        props: ['productId', 'size'],
+                        template: '<button class="wishlist-manager-fallback">♡</button>'
+                    };
+                }
+
+                if (typeof ProductComparison === 'undefined') {
+                    window.ProductComparison = {
+                        template: '<div class="product-comparison-fallback"></div>'
+                    };
+                }
+
+                if (typeof RecentlyViewed === 'undefined') {
+                    window.RecentlyViewed = {
+                        props: ['maxItems', 'layout', 'showTitle'],
+                        template: '<div class="recently-viewed-fallback"></div>'
+                    };
+                }
+
+                console.log('✅ All fallback components created');
+
+                // Create Vue app
+                console.log('🎯 Creating Vue app...');
+
+                // Check if components are available
+                console.log('🔍 Checking component availability:');
+                console.log('- NavHeader:', typeof NavHeader !== 'undefined' ? '✅' : '❌');
+                console.log('- AppFooter:', typeof AppFooter !== 'undefined' ? '✅' : '❌');
+                console.log('- Home:', typeof Home !== 'undefined' ? '✅' : '❌');
+                console.log('- Products:', typeof Products !== 'undefined' ? '✅' : '❌');
+                console.log('- Cart:', typeof Cart !== 'undefined' ? '✅' : '❌');
+                console.log('- Router:', typeof window.router !== 'undefined' ? '✅' : '❌');
+
+                // Check critical components (they're defined globally, not on window)
+                const criticalComponents = [
+                    { name: 'NavHeader', exists: typeof NavHeader !== 'undefined' },
+                    { name: 'AppFooter', exists: typeof AppFooter !== 'undefined' },
+                    { name: 'Home', exists: typeof Home !== 'undefined' },
+                    { name: 'Products', exists: typeof Products !== 'undefined' },
+                    { name: 'Cart', exists: typeof Cart !== 'undefined' }
+                ];
+
+                const missingComponents = criticalComponents.filter(comp => !comp.exists);
+
+                if (missingComponents.length > 0) {
+                    console.error('❌ Missing critical components:', missingComponents.map(c => c.name));
+                } else {
+                    console.log('✅ All critical components available');
+                }
+
+                const app = createApp({
+                    template: `
+                        <div class="app">
+                            <nav-header></nav-header>
+                            <main class="main-content">
+                                <router-view></router-view>
+                            </main>
+                            <app-footer></app-footer>
+                            <toast-notifications></toast-notifications>
+                        </div>
+                    `,
+                    errorCaptured(err, instance, info) {
+                        console.error('Vue error captured:', err, info);
+                        return false;
+                    }
+                });
+
+                // Global error handler
+                app.config.errorHandler = (err, instance, info) => {
+                    console.error('Global error handler:', err, info);
+                };
+
+                // Register components
+                console.log('📝 Registering components...');
+
+                // Register critical components with better fallbacks
+                const registerComponent = (name, component, fallback) => {
+                    try {
+                        if (component && typeof component === 'object') {
+                            app.component(name, component);
+                            // Only log critical components
+                            if (['NavHeader', 'AppFooter', 'Home', 'Products', 'Cart'].includes(name)) {
+                                console.log(`✅ Registered: ${name}`);
+                            }
+                        } else {
+                            app.component(name, fallback);
+                            console.log(`⚠️ Using fallback for: ${name}`);
+                        }
+                    } catch (error) {
+                        console.error(`❌ Failed to register ${name}:`, error);
+                        app.component(name, fallback);
+                    }
+                };
+
+                // Register components with fallbacks
+                registerComponent('NavHeader', NavHeader, {
+                    template: '<header class="nav-header"><div class="container"><div class="nav-content"><div class="logo">NeoGears</div></div></div></header>'
+                });
+                registerComponent('AppFooter', AppFooter, {
+                    template: '<footer class="app-footer"><div class="container"><p>&copy; 2024 NeoGears</p></div></footer>'
+                });
+                registerComponent('ToastNotifications', ToastNotifications, { template: '<div class="toast-container"></div>' });
+                registerComponent('LoadingSkeleton', LoadingSkeleton, {
+                    props: ['type', 'count'],
+                    template: '<div class="loading-skeleton">Loading...</div>'
+                });
+                registerComponent('PriceRangeSlider', PriceRangeSlider || window.PriceRangeSlider, {
+                    props: ['min', 'max', 'step', 'modelValue'],
+                    emits: ['update:modelValue', 'change'],
+                    template: '<div class="price-range-slider">Price Range</div>'
+                });
+                registerComponent('FilterBadges', FilterBadges || window.FilterBadges, {
+                    props: ['selectedCategories', 'selectedBrands', 'searchQuery', 'priceRange'],
+                    template: '<div class="filter-badges"></div>'
+                });
+                registerComponent('MobileFiltersModal', MobileFiltersModal || window.MobileFiltersModal, {
+                    props: ['isOpen'],
+                    template: '<div v-if="isOpen" class="mobile-filters-modal">Filters</div>'
+                });
+                registerComponent('SwipeableProductCard', SwipeableProductCard || window.SwipeableProductCard, {
+                    props: ['product'],
+                    template: '<div class="product-card">{{ product?.title || "Product" }}</div>'
+                });
+                registerComponent('PullToRefresh', PullToRefresh || window.PullToRefresh, {
+                    template: '<div class="pull-to-refresh"><slot></slot></div>'
+                });
+                registerComponent('InfiniteScroll', InfiniteScroll || window.InfiniteScroll, {
+                    props: ['items'],
+                    template: '<div class="infinite-scroll"><slot :visibleItems="items"></slot></div>'
+                });
+                registerComponent('DarkModeToggle', DarkModeToggle, {
+                    template: '<button class="dark-mode-toggle">🌙</button>'
+                });
+                registerComponent('ImageZoom', ImageZoom || window.ImageZoom, {
+                    props: ['src', 'alt'],
+                    template: '<img :src="src" :alt="alt" />'
+                });
+                registerComponent('StockIndicator', StockIndicator || window.StockIndicator, {
+                    template: '<div class="stock-indicator">In Stock</div>'
+                });
+                registerComponent('ColorVariants', ColorVariants || window.ColorVariants, {
+                    template: '<div class="color-variants"></div>'
+                });
+                registerComponent('ImageGallery', ImageGallery || window.ImageGallery, {
+                    template: '<div class="image-gallery"></div>'
+                });
+                registerComponent('WishlistManager', WishlistManager || window.WishlistManager, {
+                    props: ['productId'],
+                    template: '<button class="wishlist-btn">♡</button>'
+                });
+                registerComponent('ProductComparison', ProductComparison || window.ProductComparison, {
+                    template: '<div class="product-comparison"></div>'
+                });
+                registerComponent('RecentlyViewed', RecentlyViewed || window.RecentlyViewed, {
+                    template: '<div class="recently-viewed"></div>'
+                });
+
+                // Register view components explicitly
+                if (typeof Home !== 'undefined') {
+                    console.log('✅ Home view component available');
+                } else {
+                    console.error('❌ Home view component missing!');
+                }
+
+                if (typeof Products !== 'undefined') {
+                    console.log('✅ Products view component available');
+                } else {
+                    console.error('❌ Products view component missing!');
+                }
+
+                if (typeof Cart !== 'undefined') {
+                    console.log('✅ Cart view component available');
+                } else {
+                    console.error('❌ Cart view component missing!');
+                }
+
+                console.log('✅ Component registration complete');
+
+                // Use Router only (no Pinia for now)
+                console.log('🛣️ Using router...');
+                if (window.router) {
+                    try {
+                        app.use(window.router);
+                        console.log('✅ Router attached to app');
+                    } catch (error) {
+                        console.error('❌ Error attaching router:', error);
+                    }
+                } else {
+                    console.error('❌ Router not available!');
+                    // Create a minimal fallback router
+                    const { createRouter, createWebHashHistory } = VueRouter;
+                    const fallbackRouter = createRouter({
+                        history: createWebHashHistory(),
+                        routes: [
+                            { path: '/', component: { template: '<div>Home</div>' } },
+                            { path: '/products', component: { template: '<div>Products</div>' } },
+                            { path: '/cart', component: { template: '<div>Cart</div>' } }
+                        ]
+                    });
+                    app.use(fallbackRouter);
+                    console.log('⚠️ Using fallback router');
+                }
+
+                // Mount the app with error handling
+                console.log('🎯 Mounting app...');
+                try {
+                    const mountedApp = app.mount('#app');
+                    console.log('🎉 NeoGears app mounted successfully!');
+
+                    // Test router navigation after mount
+                    setTimeout(() => {
+                        console.log('🧪 Testing router navigation...');
+                        console.log('Current route:', window.router?.currentRoute?.value?.path);
+
+                        // Test if router-view is working
+                        const routerView = document.querySelector('router-view');
+                        console.log('Router-view element:', routerView ? '✅ Found' : '❌ Missing');
+
+                        // Check if components are rendering
+                        const appContent = document.querySelector('#app .app');
+                        console.log('App content:', appContent ? '✅ Found' : '❌ Missing');
+
+                        // Check main content
+                        const mainContent = document.querySelector('.main-content');
+                        console.log('Main content:', mainContent ? '✅ Found' : '❌ Missing');
+
+                        // Check current component
+                        const currentComponent = document.querySelector('.products-page, .cart-page, .home-page');
+                        console.log('Current page component:', currentComponent ? `✅ Found (${currentComponent.className})` : '❌ Missing');
+
+                        // Add router navigation listener
+                        if (window.router) {
+                            window.router.afterEach((to, from) => {
+                                console.log(`🔄 Route changed: ${from.path} → ${to.path}`);
+
+                                // Check if component rendered after navigation
+                                setTimeout(() => {
+                                    const pageComponent = document.querySelector('.products-page, .cart-page, .home-page');
+                                    console.log(`📄 Page component after navigation:`, pageComponent ? `✅ ${pageComponent.className}` : '❌ Missing');
+                                }, 100);
+                            });
+                        }
+                    }, 1000);
+
+                    // Hide loading screen
+                    const loadingScreen = document.getElementById('loading-screen');
+                    if (loadingScreen) {
+                        loadingScreen.style.display = 'none';
+                    }
+                } catch (error) {
+                    console.error('❌ Error mounting app:', error);
+                    document.getElementById('app').innerHTML = `
+                        <div style="padding: 2rem; text-align: center; color: red;">
+                            <h2>Greška pri učitavanju aplikacije</h2>
+                            <p>Detalji: ${error.message}</p>
+                            <button onclick="location.reload()" style="padding: 0.5rem 1rem; margin-top: 1rem;">
+                                Osvježi stranicu
+                            </button>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error mounting app:', error);
+                document.getElementById('app').innerHTML = '<div style="padding: 2rem; text-align: center; color: red;"><h2>Greška pri pokretanju aplikacije</h2><p>' + error.message + '</p></div>';
+            }
+        } // End of initializeApp function
+    </script>
+</body>
+</html>
