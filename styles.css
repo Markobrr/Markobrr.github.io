@@ -292,6 +292,9 @@ nav ul li a:hover {
 .project-info p {
     color: #666;
     margin-bottom: 20px;
+    flex-grow: 1;
+    line-height: 1.6;
+    min-height: 3.2em; /* Ensures consistent height for 2 lines */
 }
 
 .project-tags {
@@ -299,6 +302,8 @@ nav ul li a:hover {
     flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 20px;
+    min-height: 2.5em; /* Ensures consistent height for tags */
+    align-content: flex-start;
 }
 
 .project-tags span {
